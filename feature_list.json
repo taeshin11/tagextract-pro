@@ -4,55 +4,55 @@
     {
       "id": 1,
       "title": "Harness & Repo Initialization",
-      "status": "in_progress",
+      "status": "done",
       "features": [
         { "id": "1.1", "title": "Create feature_list.json", "status": "done" },
         { "id": "1.2", "title": "Create claude-progress.txt", "status": "done" },
         { "id": "1.3", "title": "Create init.sh", "status": "done" },
-        { "id": "1.4", "title": "Initialize Git & create GitHub repo", "status": "pending" }
+        { "id": "1.4", "title": "Initialize Git & create GitHub repo", "status": "done" }
       ]
     },
     {
       "id": 2,
       "title": "UI Skeleton, SEO & Monetization Prep",
-      "status": "pending",
+      "status": "done",
       "features": [
-        { "id": "2.1", "title": "Responsive layout (Header, Search, Dashboard, Footer)", "status": "pending" },
-        { "id": "2.2", "title": "SEO meta tags (OG, Twitter Cards)", "status": "pending" },
-        { "id": "2.3", "title": "Adsterra ad placeholders", "status": "pending" },
-        { "id": "2.4", "title": "Visitor counter layout in footer", "status": "pending" }
+        { "id": "2.1", "title": "Responsive layout (Header, Search, Dashboard, Footer)", "status": "done" },
+        { "id": "2.2", "title": "SEO meta tags (OG, Twitter Cards)", "status": "done" },
+        { "id": "2.3", "title": "Adsterra ad placeholders", "status": "done" },
+        { "id": "2.4", "title": "Visitor counter layout in footer", "status": "done" }
       ]
     },
     {
       "id": 3,
       "title": "YouTube Data API Integration",
-      "status": "pending",
+      "status": "done",
       "features": [
-        { "id": "3.1", "title": "Video ID extraction from various URL formats", "status": "pending" },
-        { "id": "3.2", "title": "Fetch video details via YouTube Data API v3", "status": "pending" },
-        { "id": "3.3", "title": "Render tags as UI chips on dashboard", "status": "pending" },
-        { "id": "3.4", "title": "Copy All Tags button", "status": "pending" }
+        { "id": "3.1", "title": "Video ID extraction from various URL formats", "status": "done" },
+        { "id": "3.2", "title": "Fetch video details via YouTube Data API v3", "status": "done" },
+        { "id": "3.3", "title": "Render tags as UI chips on dashboard", "status": "done" },
+        { "id": "3.4", "title": "Copy All Tags button", "status": "done" }
       ]
     },
     {
       "id": 4,
       "title": "Webhook Data Collection & Counters",
-      "status": "pending",
+      "status": "done",
       "features": [
-        { "id": "4.1", "title": "Create webhook.gs (Google Apps Script)", "status": "pending" },
-        { "id": "4.2", "title": "Silent fetch POST to webhook on Extract", "status": "pending" },
-        { "id": "4.3", "title": "Visitor counter API integration in footer", "status": "pending" }
+        { "id": "4.1", "title": "Create webhook.gs (Google Apps Script)", "status": "done" },
+        { "id": "4.2", "title": "Silent fetch POST to webhook on Extract", "status": "done" },
+        { "id": "4.3", "title": "Visitor counter API integration in footer", "status": "done" }
       ]
     },
     {
       "id": 5,
       "title": "Final Review & Production Deployment",
-      "status": "pending",
+      "status": "done",
       "features": [
-        { "id": "5.1", "title": "QA review (zero-cost, responsiveness, ads)", "status": "pending" },
-        { "id": "5.2", "title": "Deploy to Vercel/Netlify", "status": "pending" },
-        { "id": "5.3", "title": "Document live URL", "status": "pending" },
-        { "id": "5.4", "title": "Final git push", "status": "pending" }
+        { "id": "5.1", "title": "QA review (zero-cost, responsiveness, ads)", "status": "done" },
+        { "id": "5.2", "title": "Deploy to Vercel", "status": "done" },
+        { "id": "5.3", "title": "Document live URL", "status": "done" },
+        { "id": "5.4", "title": "Final git push", "status": "done" }
       ]
     }
   ]

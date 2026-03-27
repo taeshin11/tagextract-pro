@@ -2,35 +2,27 @@
 TagExtract Pro - Progress Log
 ==============================
 
-[2026-03-28] Milestone 1: Harness & Repo Initialization ✅
-[2026-03-28] Milestone 2: UI Skeleton, SEO & Monetization Prep ✅
-[2026-03-28] Milestone 3: YouTube Data API Integration ✅
-[2026-03-28] Milestone 4: Webhook Data Collection & Counters ✅
-[2026-03-28] Milestone 5: Final Review & Production Deployment ✅
+[2026-03-28] Milestone 1-5: ALL PRD MILESTONES COMPLETE ✅
+- Harness files, GitHub repo, UI, SEO, YouTube API, webhook, Adsterra, visitor counter, Vercel deploy
 
 [2026-03-28] V1 Improvements ✅
-- Individual tag click-to-copy, filter/sort, export .txt
-- Toast notifications, staggered animations, accessibility
-- Better API error handling (403, 429, timeout)
+- Click-to-copy tags, filter/sort, export .txt, toast, animations, accessibility
 
 [2026-03-28] V2 Improvements ✅
-- Dark/Light theme toggle with persistence
-- Search history (last 5 videos with thumbnails)
-- Copy as Hashtags, tag character counter bar (X/500)
-- Paste from clipboard button, auto-extract on paste
-- How It Works + FAQ sections, JSON-LD schema
+- Theme toggle, search history, hashtags, tag char counter, paste button, auto-extract, FAQ, JSON-LD
 
 [2026-03-28] V3 Improvements ✅
-- Multi-language support (EN, KO, JA, ES) with language selector
-- Tag Comparison Mode: compare tags between two videos side-by-side
-  - Shows common tags, unique to Video 1, unique to Video 2
-- Description Keyword Extraction: analyzes video description for top keywords
-- Share Results: generates shareable URL with ?v=VIDEO_ID parameter
-- URL parameter support: auto-loads video from ?v= query string
-- sitemap.xml + robots.txt for SEO crawling
-- Custom 404 error page
-- XSS protection in history rendering (HTML entity escaping)
+- Multi-language (EN/KO/JA/ES), tag comparison, description keywords, share link, sitemap, 404
 
-[Status] ALL MILESTONES + V3 IMPROVEMENTS COMPLETE
+[2026-03-28] V4 Improvements ✅
+- Tag Cloud View: toggle between chip view and word-cloud visualization
+- Bulk Extract Mode: paste multiple URLs, extract tags from all videos at once
+- CSV Export: download bulk results as CSV spreadsheet
+- SEO Score Calculator: 10-point checklist scoring tag quality (0-100)
+  - Checks: tag count, char utilization, title/desc tag matches, tag diversity
+  - Visual ring indicator (green/yellow/red) + detailed checklist
+- View Toggle UI: switch between chip and cloud views
+
+[Status] ALL MILESTONES + V4 IMPROVEMENTS COMPLETE
 [Live URL] https://tagextract-pro.vercel.app
 [GitHub] https://github.com/taeshin11/tagextract-pro

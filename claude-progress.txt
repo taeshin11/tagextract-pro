@@ -30,6 +30,30 @@ TagExtract Pro - Progress Log
 - Live URL: https://tagextract-pro.vercel.app
 - Final git push completed
 
-[Status] ALL MILESTONES COMPLETE
+[2026-03-28] V1 Improvements ✅
+- Individual tag click-to-copy with visual feedback
+- Tag filter input for real-time filtering
+- Tag sorting (Default / A-Z / Length)
+- Export tags as .txt file download
+- Toast notifications for copy confirmations
+- Staggered chip cascade animations
+- Better API error handling (403, 429, timeout)
+- Accessibility: focus-visible, keyboard nav, aria-live, roles
+- Disabled button state styling
+
+[2026-03-28] V2 Improvements ✅
+- Dark/Light theme toggle with localStorage persistence
+- Search history (last 5 videos with thumbnails, click to re-extract)
+- Copy as Hashtags button (#tag format)
+- Tag character counter bar (X / 500 with visual progress bar)
+- Paste from clipboard button
+- Auto-extract when pasting a URL into input
+- "How It Works" 3-step section for new users
+- FAQ section with expandable details (SEO-friendly)
+- JSON-LD structured data schema for rich search results
+- Keyboard shortcut hints (Ctrl+V, Enter)
+- Improved mobile responsiveness for new features
+
+[Status] ALL MILESTONES + V2 IMPROVEMENTS COMPLETE
 [Live URL] https://tagextract-pro.vercel.app
 [GitHub] https://github.com/taeshin11/tagextract-pro

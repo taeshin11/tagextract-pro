@@ -5,17 +5,23 @@ TagExtract Pro - Progress Log
 [2026-03-28] PRD Milestones 1-5: COMPLETE ✅
 [2026-03-28] V1: Click-to-copy, filter, sort, export, toast, accessibility ✅
 [2026-03-28] V2: Theme, history, hashtags, char counter, paste, FAQ, JSON-LD ✅
-[2026-03-28] V3: Multi-language, tag comparison, keywords, share, sitemap, 404 ✅
+[2026-03-28] V3: Multi-language (EN/KO/JA/ES), tag comparison, keywords, share, sitemap, 404 ✅
 [2026-03-28] V4: Tag cloud, bulk extract, CSV export, SEO score calculator ✅
 [2026-03-28] V5: PWA, social share, skeleton loader, scroll-to-top, animated header ✅
 [2026-03-28] V6: Tag analysis charts, keyboard shortcuts, confetti, modal ✅
+[2026-03-28] V7: Security fixes (XSS), debounce, preconnect, noscript, perf optimizations ✅
+[2026-03-28] V8: Tag Basket, color-coded tags, tag legend, print stylesheet ✅
 
-V6 Details:
-- Tag Analysis Charts: bar charts showing tag length distribution + word count per tag
-- Keyboard Shortcuts: ? opens help modal, Esc closes, T toggles theme
-- Confetti Celebration: particle burst on first tag copy (one-time delight)
-- Shortcuts Modal: clean overlay with all keyboard bindings listed
+V8 Details:
+- Tag Basket: Collect tags from multiple videos into a persistent basket (localStorage)
+  - Click + on any tag to add, click basket tag to remove
+  - Copy all basket tags, clear basket
+- Color-Coded Tags: Visual categorization by word count
+  - Blue = Short (1 word), Green = Medium (2-3 words), Orange = Long-tail (4+)
+  - Tag legend displayed above tags
+- Print Stylesheet: Clean print-friendly layout hiding UI controls
+- i18n: Basket + chart labels in all 4 languages
 
-[Status] ALL MILESTONES + V6 COMPLETE (13 commits)
+[Status] ALL MILESTONES + V8 COMPLETE (16 commits)
 [Live URL] https://tagextract-pro.vercel.app
 [GitHub] https://github.com/taeshin11/tagextract-pro

@@ -273,6 +273,7 @@ function renderResults(video) {
 
   currentVideoData = video;
   renderSeoScore(video);
+  updateSocialLinks();
 
   // Description keywords
   const keywords = extractKeywords(snippet.description);
@@ -1071,3 +1072,35 @@ function initVisitorCounter() {
 }
 
 initVisitorCounter();
+
+// ===========================
+// Scroll to Top Button
+// ===========================
+const scrollTopBtn = document.getElementById('scroll-top');
+
+window.addEventListener('scroll', () => {
+  scrollTopBtn.hidden = window.scrollY < 300;
+}, { passive: true });
+
+scrollTopBtn.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// ===========================
+// Social Share Links
+// ===========================
+const socialShare = document.getElementById('social-share');
+const shareTwitter = document.getElementById('share-twitter');
+const shareFacebook = document.getElementById('share-facebook');
+const shareWhatsapp = document.getElementById('share-whatsapp');
+
+function updateSocialLinks() {
+  if (!currentVideoId) return;
+  const shareUrl = encodeURIComponent(`${window.location.origin}${window.location.pathname}?v=${currentVideoId}`);
+  const text = encodeURIComponent(`Check out the tags for this YouTube video! - TagExtract Pro`);
+
+  shareTwitter.href = `https://twitter.com/intent/tweet?url=${shareUrl}&text=${text}`;
+  shareFacebook.href = `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`;
+  shareWhatsapp.href = `https://wa.me/?text=${text}%20${shareUrl}`;
+  socialShare.hidden = false;
+}

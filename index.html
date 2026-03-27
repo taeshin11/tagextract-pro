@@ -49,8 +49,12 @@
   }
   </script>
 
-  <!-- Favicon -->
+  <!-- Favicon & PWA -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏷️</text></svg>">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#ff0050">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
   <!-- Adsterra Popunder/Social Bar Placeholder -->
   <!-- ADSTERRA_POPUNDER: Paste your Adsterra Popunder or Social Bar script here -->
@@ -155,10 +159,24 @@
       <!-- Error Message -->
       <div id="error-msg" class="error-msg" role="alert" aria-live="polite" hidden></div>
 
-      <!-- Loading Spinner -->
+      <!-- Loading Skeleton -->
       <div id="loading" class="loading" hidden>
-        <div class="spinner"></div>
-        <p data-i18n="extracting">Extracting tags...</p>
+        <div class="skeleton-card">
+          <div class="skeleton-thumb skeleton-pulse"></div>
+          <div class="skeleton-info">
+            <div class="skeleton-line skeleton-pulse" style="width:80%"></div>
+            <div class="skeleton-line skeleton-pulse" style="width:50%"></div>
+            <div class="skeleton-line-sm skeleton-pulse" style="width:60%"></div>
+          </div>
+        </div>
+        <div class="skeleton-tags">
+          <div class="skeleton-chip skeleton-pulse"></div>
+          <div class="skeleton-chip skeleton-pulse"></div>
+          <div class="skeleton-chip skeleton-pulse"></div>
+          <div class="skeleton-chip skeleton-pulse"></div>
+          <div class="skeleton-chip skeleton-pulse"></div>
+        </div>
+        <p class="loading-text" data-i18n="extracting">Extracting tags...</p>
       </div>
 
       <!-- Results Dashboard -->
@@ -364,10 +382,28 @@
     </div>
   </footer>
 
+  <!-- Social Share Bar (visible after results) -->
+  <div id="social-share" class="social-share" hidden>
+    <span class="social-label" data-i18n="shareResults">Share this result:</span>
+    <a id="share-twitter" class="social-btn social-twitter" target="_blank" rel="noopener" aria-label="Share on Twitter/X">𝕏</a>
+    <a id="share-facebook" class="social-btn social-facebook" target="_blank" rel="noopener" aria-label="Share on Facebook">f</a>
+    <a id="share-whatsapp" class="social-btn social-whatsapp" target="_blank" rel="noopener" aria-label="Share on WhatsApp">W</a>
+  </div>
+
+  <!-- Scroll to top -->
+  <button id="scroll-top" class="scroll-top" aria-label="Scroll to top" hidden>↑</button>
+
   <!-- Toast container -->
   <div id="toast" class="toast" aria-live="polite"></div>
 
   <script src="i18n.js"></script>
   <script src="app.js"></script>
+
+  <!-- Register Service Worker -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').catch(() => {});
+    }
+  </script>
 </body>
 </html>

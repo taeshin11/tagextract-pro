@@ -82,6 +82,26 @@ body {
   padding: 24px 0;
   text-align: center;
   border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.header::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at 30% 50%, rgba(255, 0, 80, 0.06) 0%, transparent 50%),
+              radial-gradient(circle at 70% 50%, rgba(0, 212, 255, 0.04) 0%, transparent 50%);
+  animation: headerGlow 8s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes headerGlow {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-5%, 3%); }
 }
 
 .header-inner {
@@ -1175,6 +1195,155 @@ body {
 .seo-check.fail { color: var(--primary); }
 
 /* ===========================
+   Skeleton Loading
+   =========================== */
+.loading-text {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-top: 16px;
+}
+
+.skeleton-card {
+  display: flex;
+  gap: 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.skeleton-thumb {
+  width: 160px;
+  height: 90px;
+  border-radius: 8px;
+  background: var(--bg-input);
+  flex-shrink: 0;
+}
+
+.skeleton-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+}
+
+.skeleton-line {
+  height: 14px;
+  border-radius: 4px;
+  background: var(--bg-input);
+}
+
+.skeleton-line-sm {
+  height: 10px;
+  border-radius: 3px;
+  background: var(--bg-input);
+}
+
+.skeleton-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.skeleton-chip {
+  width: 80px;
+  height: 30px;
+  border-radius: 20px;
+  background: var(--bg-input);
+}
+
+.skeleton-chip:nth-child(2) { width: 100px; }
+.skeleton-chip:nth-child(3) { width: 65px; }
+.skeleton-chip:nth-child(4) { width: 110px; }
+.skeleton-chip:nth-child(5) { width: 75px; }
+
+.skeleton-pulse {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+
+/* ===========================
+   Social Share
+   =========================== */
+.social-share {
+  position: fixed;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  z-index: 50;
+}
+
+.social-label {
+  writing-mode: vertical-rl;
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.social-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+  color: #fff;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.social-btn:hover {
+  transform: scale(1.15);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.social-twitter { background: #1a1a2e; border: 1px solid var(--border); }
+.social-facebook { background: #1877f2; }
+.social-whatsapp { background: #25d366; }
+
+/* ===========================
+   Scroll to Top
+   =========================== */
+.scroll-top {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  z-index: 100;
+  transition: opacity 0.3s, transform 0.3s;
+  box-shadow: 0 2px 12px rgba(255, 0, 80, 0.3);
+}
+
+.scroll-top:hover {
+  transform: scale(1.1);
+}
+
+.scroll-top[hidden] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ===========================
    Responsive Breakpoints
    =========================== */
 
@@ -1271,6 +1440,28 @@ body {
   .bulk-results-header {
     flex-direction: column;
     gap: 8px;
+  }
+
+  .skeleton-card {
+    flex-direction: column;
+  }
+
+  .skeleton-thumb {
+    width: 100%;
+    height: 140px;
+  }
+
+  .social-share {
+    position: static;
+    transform: none;
+    flex-direction: row;
+    justify-content: center;
+    padding: 12px 0;
+  }
+
+  .social-label {
+    writing-mode: horizontal-tb;
+    margin-bottom: 0;
   }
 }
 

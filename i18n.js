@@ -61,6 +61,7 @@ const TRANSLATIONS = {
     errBothUrls: 'Please enter both YouTube video URLs to compare.',
     copied: 'Copied!',
     shareCopied: 'Share link copied to clipboard!',
+    shareResults: 'Share this result:',
   },
   ko: {
     tagline: '유튜브 영상의 숨겨진 태그를 즉시 추출 — 크리에이터를 위한 무료 SEO 도구',
@@ -120,6 +121,7 @@ const TRANSLATIONS = {
     errBothUrls: '비교하려면 두 개의 유튜브 영상 URL을 모두 입력해주세요.',
     copied: '복사됨!',
     shareCopied: '공유 링크가 클립보드에 복사되었습니다!',
+    shareResults: '이 결과 공유:',
   },
   ja: {
     tagline: 'YouTube動画の隠しタグを即座に抽出 — クリエイター向け無料SEOツール',
@@ -179,6 +181,7 @@ const TRANSLATIONS = {
     errBothUrls: '比較するには両方のURLを入力してください。',
     copied: 'コピーしました！',
     shareCopied: '共有リンクをクリップボードにコピーしました！',
+    shareResults: 'この結果を共有:',
   },
   es: {
     tagline: 'Extrae etiquetas ocultas de videos de YouTube al instante — Herramienta SEO gratuita',
@@ -238,6 +241,7 @@ const TRANSLATIONS = {
     errBothUrls: 'Ingresa ambas URLs de YouTube para comparar.',
     copied: '¡Copiado!',
     shareCopied: '¡Enlace de compartir copiado al portapapeles!',
+    shareResults: 'Compartir este resultado:',
   },
 };
 

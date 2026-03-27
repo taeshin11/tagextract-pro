@@ -2,21 +2,20 @@
 TagExtract Pro - Progress Log
 ==============================
 
-[2026-03-28] Milestone 1-5: ALL PRD MILESTONES COMPLETE ✅
+[2026-03-28] PRD Milestones 1-5: COMPLETE ✅
 [2026-03-28] V1: Click-to-copy, filter, sort, export, toast, accessibility ✅
 [2026-03-28] V2: Theme, history, hashtags, char counter, paste, FAQ, JSON-LD ✅
 [2026-03-28] V3: Multi-language, tag comparison, keywords, share, sitemap, 404 ✅
 [2026-03-28] V4: Tag cloud, bulk extract, CSV export, SEO score calculator ✅
 [2026-03-28] V5: PWA, social share, skeleton loader, scroll-to-top, animated header ✅
+[2026-03-28] V6: Tag analysis charts, keyboard shortcuts, confetti, modal ✅
 
-V5 Details:
-- PWA: manifest.json + service worker for installability & offline caching
-- Skeleton Loader: beautiful shimmer loading animation replacing plain spinner
-- Social Share: floating sidebar with X/Twitter, Facebook, WhatsApp share buttons
-- Scroll-to-Top: floating button appears after scrolling 300px
-- Animated Header: subtle radial gradient glow animation behind header
-- Apple mobile web app meta tags for iOS installability
+V6 Details:
+- Tag Analysis Charts: bar charts showing tag length distribution + word count per tag
+- Keyboard Shortcuts: ? opens help modal, Esc closes, T toggles theme
+- Confetti Celebration: particle burst on first tag copy (one-time delight)
+- Shortcuts Modal: clean overlay with all keyboard bindings listed
 
-[Status] ALL MILESTONES + V5 COMPLETE (11 commits)
+[Status] ALL MILESTONES + V6 COMPLETE (13 commits)
 [Live URL] https://tagextract-pro.vercel.app
 [GitHub] https://github.com/taeshin11/tagextract-pro

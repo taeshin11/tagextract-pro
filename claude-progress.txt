@@ -3,26 +3,20 @@ TagExtract Pro - Progress Log
 ==============================
 
 [2026-03-28] Milestone 1-5: ALL PRD MILESTONES COMPLETE ✅
-- Harness files, GitHub repo, UI, SEO, YouTube API, webhook, Adsterra, visitor counter, Vercel deploy
+[2026-03-28] V1: Click-to-copy, filter, sort, export, toast, accessibility ✅
+[2026-03-28] V2: Theme, history, hashtags, char counter, paste, FAQ, JSON-LD ✅
+[2026-03-28] V3: Multi-language, tag comparison, keywords, share, sitemap, 404 ✅
+[2026-03-28] V4: Tag cloud, bulk extract, CSV export, SEO score calculator ✅
+[2026-03-28] V5: PWA, social share, skeleton loader, scroll-to-top, animated header ✅
 
-[2026-03-28] V1 Improvements ✅
-- Click-to-copy tags, filter/sort, export .txt, toast, animations, accessibility
+V5 Details:
+- PWA: manifest.json + service worker for installability & offline caching
+- Skeleton Loader: beautiful shimmer loading animation replacing plain spinner
+- Social Share: floating sidebar with X/Twitter, Facebook, WhatsApp share buttons
+- Scroll-to-Top: floating button appears after scrolling 300px
+- Animated Header: subtle radial gradient glow animation behind header
+- Apple mobile web app meta tags for iOS installability
 
-[2026-03-28] V2 Improvements ✅
-- Theme toggle, search history, hashtags, tag char counter, paste button, auto-extract, FAQ, JSON-LD
-
-[2026-03-28] V3 Improvements ✅
-- Multi-language (EN/KO/JA/ES), tag comparison, description keywords, share link, sitemap, 404
-
-[2026-03-28] V4 Improvements ✅
-- Tag Cloud View: toggle between chip view and word-cloud visualization
-- Bulk Extract Mode: paste multiple URLs, extract tags from all videos at once
-- CSV Export: download bulk results as CSV spreadsheet
-- SEO Score Calculator: 10-point checklist scoring tag quality (0-100)
-  - Checks: tag count, char utilization, title/desc tag matches, tag diversity
-  - Visual ring indicator (green/yellow/red) + detailed checklist
-- View Toggle UI: switch between chip and cloud views
-
-[Status] ALL MILESTONES + V4 IMPROVEMENTS COMPLETE
+[Status] ALL MILESTONES + V5 COMPLETE (11 commits)
 [Live URL] https://tagextract-pro.vercel.app
 [GitHub] https://github.com/taeshin11/tagextract-pro

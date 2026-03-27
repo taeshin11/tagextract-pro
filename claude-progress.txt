@@ -2,26 +2,18 @@
 TagExtract Pro - Progress Log
 ==============================
 
-[2026-03-28] PRD Milestones 1-5: COMPLETE ✅
-[2026-03-28] V1: Click-to-copy, filter, sort, export, toast, accessibility ✅
-[2026-03-28] V2: Theme, history, hashtags, char counter, paste, FAQ, JSON-LD ✅
-[2026-03-28] V3: Multi-language (EN/KO/JA/ES), tag comparison, keywords, share, sitemap, 404 ✅
-[2026-03-28] V4: Tag cloud, bulk extract, CSV export, SEO score calculator ✅
-[2026-03-28] V5: PWA, social share, skeleton loader, scroll-to-top, animated header ✅
-[2026-03-28] V6: Tag analysis charts, keyboard shortcuts, confetti, modal ✅
-[2026-03-28] V7: Security fixes (XSS), debounce, preconnect, noscript, perf optimizations ✅
-[2026-03-28] V8: Tag Basket, color-coded tags, tag legend, print stylesheet ✅
+PRD Milestones 1-5: COMPLETE ✅
+V1-V8: Features shipped ✅
+V9: OG image, auto-focus, YouTube link, meta fixes ✅
+V10: Critical bug fixes ✅
 
-V8 Details:
-- Tag Basket: Collect tags from multiple videos into a persistent basket (localStorage)
-  - Click + on any tag to add, click basket tag to remove
-  - Copy all basket tags, clear basket
-- Color-Coded Tags: Visual categorization by word count
-  - Blue = Short (1 word), Green = Medium (2-3 words), Orange = Long-tail (4+)
-  - Tag legend displayed above tags
-- Print Stylesheet: Clean print-friendly layout hiding UI controls
-- i18n: Basket + chart labels in all 4 languages
+V10 Bug Fixes:
+- Fixed variable shadow: t() i18n function was shadowed by arrow function params in compare mode and hashtag copy — caused runtime errors with translations
+- Fixed duplicate const declarations: basketSection and socialShare were declared twice — would crash on strict mode
+- Fixed declaration ordering: basketSection used in mode tabs before being declared — would throw ReferenceError
+- Fixed sort button ignoring cloud view: sorting always rendered chips even when cloud view was active
+- Fixed mode tab cleanup: switching modes now properly hides SEO score, charts, keywords, and social share sections
 
-[Status] ALL MILESTONES + V8 COMPLETE (16 commits)
+[Status] ALL MILESTONES + V10 COMPLETE (19 commits)
 [Live URL] https://tagextract-pro.vercel.app
 [GitHub] https://github.com/taeshin11/tagextract-pro

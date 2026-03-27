@@ -16,6 +16,7 @@ const TRANSLATIONS = {
     inputPlaceholder2: 'Paste second YouTube video URL to compare...',
     extractBtn: 'Extract Tags',
     urlHint: 'Supports youtube.com, youtu.be, and YouTube Shorts URLs',
+
     recentSearches: 'Recent Searches',
     clearHistory: 'Clear',
     extracting: 'Extracting tags...',

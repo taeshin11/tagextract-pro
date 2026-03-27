@@ -483,6 +483,21 @@ body {
   margin-bottom: 8px;
 }
 
+.yt-link {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 0.8rem;
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+  transition: opacity 0.2s;
+}
+
+.yt-link:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}
+
 .video-stats {
   display: flex;
   flex-wrap: wrap;

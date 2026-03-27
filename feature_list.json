@@ -1,59 +1,21 @@
 {
   "project": "TagExtract Pro",
   "milestones": [
-    {
-      "id": 1,
-      "title": "Harness & Repo Initialization",
-      "status": "done",
-      "features": [
-        { "id": "1.1", "title": "Create feature_list.json", "status": "done" },
-        { "id": "1.2", "title": "Create claude-progress.txt", "status": "done" },
-        { "id": "1.3", "title": "Create init.sh", "status": "done" },
-        { "id": "1.4", "title": "Initialize Git & create GitHub repo", "status": "done" }
-      ]
-    },
-    {
-      "id": 2,
-      "title": "UI Skeleton, SEO & Monetization Prep",
-      "status": "done",
-      "features": [
-        { "id": "2.1", "title": "Responsive layout (Header, Search, Dashboard, Footer)", "status": "done" },
-        { "id": "2.2", "title": "SEO meta tags (OG, Twitter Cards)", "status": "done" },
-        { "id": "2.3", "title": "Adsterra ad placeholders", "status": "done" },
-        { "id": "2.4", "title": "Visitor counter layout in footer", "status": "done" }
-      ]
-    },
-    {
-      "id": 3,
-      "title": "YouTube Data API Integration",
-      "status": "done",
-      "features": [
-        { "id": "3.1", "title": "Video ID extraction from various URL formats", "status": "done" },
-        { "id": "3.2", "title": "Fetch video details via YouTube Data API v3", "status": "done" },
-        { "id": "3.3", "title": "Render tags as UI chips on dashboard", "status": "done" },
-        { "id": "3.4", "title": "Copy All Tags button", "status": "done" }
-      ]
-    },
-    {
-      "id": 4,
-      "title": "Webhook Data Collection & Counters",
-      "status": "done",
-      "features": [
-        { "id": "4.1", "title": "Create webhook.gs (Google Apps Script)", "status": "done" },
-        { "id": "4.2", "title": "Silent fetch POST to webhook on Extract", "status": "done" },
-        { "id": "4.3", "title": "Visitor counter API integration in footer", "status": "done" }
-      ]
-    },
-    {
-      "id": 5,
-      "title": "Final Review & Production Deployment",
-      "status": "done",
-      "features": [
-        { "id": "5.1", "title": "QA review (zero-cost, responsiveness, ads)", "status": "done" },
-        { "id": "5.2", "title": "Deploy to Vercel", "status": "done" },
-        { "id": "5.3", "title": "Document live URL", "status": "done" },
-        { "id": "5.4", "title": "Final git push", "status": "done" }
-      ]
-    }
+    { "id": 1, "title": "Harness & Repo Initialization", "status": "done" },
+    { "id": 2, "title": "UI Skeleton, SEO & Monetization Prep", "status": "done" },
+    { "id": 3, "title": "YouTube Data API Integration", "status": "done" },
+    { "id": 4, "title": "Webhook Data Collection & Counters", "status": "done" },
+    { "id": 5, "title": "Final Review & Production Deployment", "status": "done" }
+  ],
+  "improvements": [
+    { "id": "V1", "title": "Click-to-copy, filter, sort, export .txt, toast, accessibility", "status": "done" },
+    { "id": "V2", "title": "Theme toggle, search history, hashtags, char counter, paste, FAQ, JSON-LD", "status": "done" },
+    { "id": "V3", "title": "Multi-language (EN/KO/JA/ES), tag comparison, description keywords, share, sitemap, 404", "status": "done" },
+    { "id": "V4", "title": "Tag cloud view, bulk extract, CSV export, SEO score calculator", "status": "done" },
+    { "id": "V5", "title": "PWA (manifest + service worker), social share, skeleton loader, scroll-to-top, animated header", "status": "done" },
+    { "id": "V6", "title": "Tag analysis charts, keyboard shortcuts, confetti, shortcuts modal", "status": "done" },
+    { "id": "V7", "title": "Security fixes (XSS), debounce, preconnect, noscript, performance optimizations", "status": "done" },
+    { "id": "V8", "title": "Tag Basket (cross-video collector), color-coded tags, tag legend, print stylesheet", "status": "done" },
+    { "id": "V9", "title": "OG image, auto-focus, YouTube link, meta tag fixes, feature_list update", "status": "done" }
   ]
 }

@@ -232,6 +232,19 @@ function renderResults(video) {
   videoLikes.textContent = `👍 ${formatNumber(statistics.likeCount)} likes`;
   videoDate.textContent = `📅 ${formatDate(snippet.publishedAt)}`;
 
+  // Add "Watch on YouTube" link
+  let ytLink = document.getElementById('yt-link');
+  if (!ytLink) {
+    ytLink = document.createElement('a');
+    ytLink.id = 'yt-link';
+    ytLink.className = 'yt-link';
+    ytLink.target = '_blank';
+    ytLink.rel = 'noopener';
+    ytLink.textContent = '▶ Watch on YouTube';
+    document.querySelector('.video-info')?.appendChild(ytLink);
+  }
+  ytLink.href = `https://www.youtube.com/watch?v=${video.id}`;
+
   const tags = snippet.tags || [];
   currentTags = tags;
   currentVideoId = video.id;
@@ -1082,6 +1095,9 @@ function checkUrlParam() {
   if (videoId && /^[a-zA-Z0-9_-]{11}$/.test(videoId)) {
     urlInput.value = `https://www.youtube.com/watch?v=${videoId}`;
     handleExtract();
+  } else {
+    // Auto-focus input for immediate typing
+    urlInput.focus();
   }
 }
 

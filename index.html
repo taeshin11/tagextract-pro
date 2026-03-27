@@ -109,11 +109,32 @@
         <div class="tags-section">
           <div class="tags-header">
             <h3 class="tags-title">🏷️ Extracted Tags <span id="tag-count" class="tag-count"></span></h3>
-            <button id="copy-tags-btn" class="btn-copy" aria-label="Copy all tags to clipboard">
-              📋 Copy All Tags
-            </button>
+            <div class="tags-actions">
+              <button id="copy-tags-btn" class="btn-copy" aria-label="Copy all tags to clipboard">
+                📋 Copy All
+              </button>
+              <button id="export-txt-btn" class="btn-copy" aria-label="Download tags as text file">
+                📥 Export .txt
+              </button>
+            </div>
           </div>
-          <div id="tags-container" class="tags-container" aria-label="Video tags"></div>
+          <div class="tags-filter-wrap">
+            <input
+              type="text"
+              id="tag-filter"
+              class="tag-filter-input"
+              placeholder="Filter tags..."
+              autocomplete="off"
+              hidden
+            >
+            <div class="tags-sort-btns" id="tags-sort-btns" hidden>
+              <button class="sort-btn active" data-sort="default">Default</button>
+              <button class="sort-btn" data-sort="az">A-Z</button>
+              <button class="sort-btn" data-sort="length">Length</button>
+            </div>
+          </div>
+          <div id="tags-container" class="tags-container" role="list" aria-live="polite" aria-label="Video tags"></div>
+          <p class="tag-click-hint" id="tag-click-hint" hidden>Click any tag to copy it</p>
         </div>
 
       </section>

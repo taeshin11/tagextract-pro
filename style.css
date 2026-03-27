@@ -858,6 +858,144 @@ body {
 }
 
 /* ===========================
+   Header Controls
+   =========================== */
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.lang-select {
+  background: var(--bg-input);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+}
+
+.lang-select:focus {
+  border-color: var(--accent);
+}
+
+/* ===========================
+   Mode Tabs
+   =========================== */
+.mode-tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 4px;
+  margin-bottom: 16px;
+  width: fit-content;
+}
+
+.mode-tab {
+  background: transparent;
+  color: var(--text-muted);
+  border: none;
+  border-radius: 7px;
+  padding: 8px 18px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.mode-tab:hover {
+  color: var(--text);
+}
+
+.mode-tab.active {
+  background: var(--primary);
+  color: #fff;
+}
+
+/* Compare Search Box */
+.compare-search-box {
+  margin-top: 8px;
+}
+
+/* ===========================
+   Compare Results
+   =========================== */
+.compare-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.compare-col {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+
+.compare-col-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.compare-col:first-child .compare-col-title {
+  color: var(--success);
+}
+
+.compare-col:nth-child(2) .compare-col-title {
+  color: var(--accent);
+}
+
+.compare-col:nth-child(3) .compare-col-title {
+  color: var(--warning);
+}
+
+.tag-chip.common {
+  border-color: rgba(0, 230, 118, 0.4);
+  background: rgba(0, 230, 118, 0.1);
+  color: var(--success);
+}
+
+.tag-chip.unique {
+  border-color: rgba(255, 171, 64, 0.4);
+  background: rgba(255, 171, 64, 0.1);
+  color: var(--warning);
+}
+
+/* ===========================
+   Keywords Section
+   =========================== */
+.keywords-section {
+  margin-top: 16px;
+}
+
+.keyword-info {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.tag-chip.keyword {
+  background: rgba(255, 0, 80, 0.08);
+  color: var(--primary);
+  border-color: rgba(255, 0, 80, 0.2);
+}
+
+.tag-chip.keyword:hover {
+  background: rgba(255, 0, 80, 0.15);
+}
+
+/* ===========================
    Responsive Breakpoints
    =========================== */
 
@@ -921,6 +1059,19 @@ body {
 
   .steps-grid {
     grid-template-columns: 1fr;
+  }
+
+  .compare-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mode-tabs {
+    width: 100%;
+  }
+
+  .mode-tab {
+    flex: 1;
+    text-align: center;
   }
 
   .tag-stats {

@@ -1,0 +1,266 @@
+// ===========================
+// TagExtract Pro - i18n (Multi-language)
+// ===========================
+
+const TRANSLATIONS = {
+  en: {
+    tagline: 'Extract Hidden YouTube Video Tags Instantly — Free SEO Tool for Creators',
+    modeSingle: 'Single Video',
+    modeCompare: 'Compare Tags',
+    inputPlaceholder: 'Paste YouTube video URL here (e.g., https://www.youtube.com/watch?v=...)',
+    inputPlaceholder2: 'Paste second YouTube video URL to compare...',
+    extractBtn: 'Extract Tags',
+    urlHint: 'Supports youtube.com, youtu.be, and YouTube Shorts URLs',
+    recentSearches: 'Recent Searches',
+    clearHistory: 'Clear',
+    extracting: 'Extracting tags...',
+    extractedTags: 'Extracted Tags',
+    copyAll: 'Copy All',
+    hashtags: 'Hashtags',
+    export: 'Export',
+    share: 'Share',
+    totalChars: 'Total characters',
+    filterPlaceholder: 'Filter tags...',
+    sortDefault: 'Default',
+    sortLength: 'Length',
+    clickHint: 'Click any tag to copy it',
+    descKeywords: 'Description Keywords',
+    keywordInfo: 'Top keywords extracted from the video description (excluding common words)',
+    compareTitle: 'Tag Comparison',
+    commonTags: 'Common Tags',
+    onlyVideo1: 'Only in Video 1',
+    onlyVideo2: 'Only in Video 2',
+    howItWorks: 'How It Works',
+    step1Title: 'Paste URL',
+    step1Desc: 'Copy a YouTube video URL and paste it into the search bar above.',
+    step2Title: 'Extract Tags',
+    step2Desc: 'Click "Extract Tags" and we\'ll fetch all hidden tags using the YouTube API.',
+    step3Title: 'Copy & Use',
+    step3Desc: 'Copy individual tags, all tags at once, or export them for your own videos.',
+    faqTitle: 'Frequently Asked Questions',
+    faq1q: 'What are YouTube video tags?',
+    faq1a: 'YouTube tags are keywords that creators add to their videos to help YouTube understand the content and context. Tags influence search rankings and video recommendations.',
+    faq2q: 'Is this tool free to use?',
+    faq2a: 'Yes! TagExtract Pro is completely free. We use the official YouTube Data API to fetch video information, and there are no hidden fees or subscriptions.',
+    faq3q: 'Can I see tags from any YouTube video?',
+    faq3a: 'You can extract tags from any public YouTube video. Some videos may not have tags set by the creator, in which case the tool will let you know.',
+    faq4q: 'How can I use extracted tags for my own videos?',
+    faq4a: 'Study the tags used by top-performing videos in your niche. Use the "Copy All" button to quickly grab tags, then adapt them for your own content. The character counter helps you stay within YouTube\'s 500-character tag limit.',
+    faq5q: 'What is the Compare Tags feature?',
+    faq5a: 'Compare Tags lets you analyze two YouTube videos side-by-side, showing common tags and unique tags for each video. Great for competitive analysis and finding tag gaps.',
+    disclaimer: 'This tool uses the official YouTube Data API. Not affiliated with YouTube or Google.',
+    noTags: 'This video has no public tags.',
+    noMatch: 'No tags match your filter.',
+    errEmpty: 'Please enter a YouTube video URL.',
+    errInvalid: 'Invalid YouTube URL. Please enter a valid video link.',
+    errBothUrls: 'Please enter both YouTube video URLs to compare.',
+    copied: 'Copied!',
+    shareCopied: 'Share link copied to clipboard!',
+  },
+  ko: {
+    tagline: '유튜브 영상의 숨겨진 태그를 즉시 추출 — 크리에이터를 위한 무료 SEO 도구',
+    modeSingle: '단일 영상',
+    modeCompare: '태그 비교',
+    inputPlaceholder: '유튜브 영상 URL을 붙여넣으세요 (예: https://www.youtube.com/watch?v=...)',
+    inputPlaceholder2: '비교할 두 번째 유튜브 영상 URL을 붙여넣으세요...',
+    extractBtn: '태그 추출',
+    urlHint: 'youtube.com, youtu.be, YouTube Shorts URL 지원',
+    recentSearches: '최근 검색',
+    clearHistory: '삭제',
+    extracting: '태그 추출 중...',
+    extractedTags: '추출된 태그',
+    copyAll: '전체 복사',
+    hashtags: '해시태그',
+    export: '내보내기',
+    share: '공유',
+    totalChars: '총 글자 수',
+    filterPlaceholder: '태그 검색...',
+    sortDefault: '기본',
+    sortLength: '길이',
+    clickHint: '태그를 클릭하면 복사됩니다',
+    descKeywords: '설명 키워드',
+    keywordInfo: '영상 설명에서 추출한 주요 키워드 (일반 단어 제외)',
+    compareTitle: '태그 비교 결과',
+    commonTags: '공통 태그',
+    onlyVideo1: '영상 1에만 있는 태그',
+    onlyVideo2: '영상 2에만 있는 태그',
+    howItWorks: '사용 방법',
+    step1Title: 'URL 붙여넣기',
+    step1Desc: '유튜브 영상 URL을 복사하여 위 검색창에 붙여넣으세요.',
+    step2Title: '태그 추출',
+    step2Desc: '"태그 추출" 버튼을 클릭하면 YouTube API로 숨겨진 태그를 가져옵니다.',
+    step3Title: '복사 & 활용',
+    step3Desc: '개별 태그, 전체 태그를 복사하거나 내보내기하여 내 영상에 활용하세요.',
+    faqTitle: '자주 묻는 질문',
+    faq1q: '유튜브 영상 태그란 무엇인가요?',
+    faq1a: '유튜브 태그는 크리에이터가 영상에 추가하는 키워드로, YouTube가 콘텐츠를 이해하는 데 도움을 줍니다. 태그는 검색 순위와 추천에 영향을 미칩니다.',
+    faq2q: '이 도구는 무료인가요?',
+    faq2a: '네! TagExtract Pro는 완전 무료입니다. 공식 YouTube Data API를 사용하며, 숨겨진 요금이나 구독이 없습니다.',
+    faq3q: '모든 유튜브 영상의 태그를 볼 수 있나요?',
+    faq3a: '모든 공개 유튜브 영상의 태그를 추출할 수 있습니다. 크리에이터가 태그를 설정하지 않은 경우 알려드립니다.',
+    faq4q: '추출한 태그를 내 영상에 어떻게 활용하나요?',
+    faq4a: '내 분야에서 인기 영상의 태그를 분석하세요. "전체 복사" 버튼으로 태그를 가져온 후, 내 콘텐츠에 맞게 수정하세요. 글자 수 카운터로 500자 제한을 확인할 수 있습니다.',
+    faq5q: '태그 비교 기능이란?',
+    faq5a: '태그 비교를 사용하면 두 유튜브 영상의 태그를 나란히 분석하여 공통 태그와 고유 태그를 보여줍니다. 경쟁 분석과 태그 갭 찾기에 유용합니다.',
+    disclaimer: '이 도구는 공식 YouTube Data API를 사용합니다. YouTube 또는 Google과 제휴하지 않습니다.',
+    noTags: '이 영상에는 공개 태그가 없습니다.',
+    noMatch: '필터와 일치하는 태그가 없습니다.',
+    errEmpty: '유튜브 영상 URL을 입력해주세요.',
+    errInvalid: '유효하지 않은 유튜브 URL입니다. 올바른 링크를 입력해주세요.',
+    errBothUrls: '비교하려면 두 개의 유튜브 영상 URL을 모두 입력해주세요.',
+    copied: '복사됨!',
+    shareCopied: '공유 링크가 클립보드에 복사되었습니다!',
+  },
+  ja: {
+    tagline: 'YouTube動画の隠しタグを即座に抽出 — クリエイター向け無料SEOツール',
+    modeSingle: '単一動画',
+    modeCompare: 'タグ比較',
+    inputPlaceholder: 'YouTube動画のURLを貼り付けてください',
+    inputPlaceholder2: '比較する2つ目のYouTube動画URLを貼り付けてください...',
+    extractBtn: 'タグ抽出',
+    urlHint: 'youtube.com、youtu.be、YouTubeショートURLに対応',
+    recentSearches: '最近の検索',
+    clearHistory: 'クリア',
+    extracting: 'タグを抽出中...',
+    extractedTags: '抽出されたタグ',
+    copyAll: '全てコピー',
+    hashtags: 'ハッシュタグ',
+    export: 'エクスポート',
+    share: '共有',
+    totalChars: '合計文字数',
+    filterPlaceholder: 'タグを検索...',
+    sortDefault: 'デフォルト',
+    sortLength: '長さ',
+    clickHint: 'タグをクリックしてコピー',
+    descKeywords: '説明キーワード',
+    keywordInfo: '動画の説明から抽出された主要キーワード',
+    compareTitle: 'タグ比較結果',
+    commonTags: '共通タグ',
+    onlyVideo1: '動画1のみ',
+    onlyVideo2: '動画2のみ',
+    howItWorks: '使い方',
+    step1Title: 'URLを貼付',
+    step1Desc: 'YouTube動画のURLをコピーして上の検索バーに貼り付けます。',
+    step2Title: 'タグ抽出',
+    step2Desc: '「タグ抽出」をクリックすると、YouTube APIで隠しタグを取得します。',
+    step3Title: 'コピー＆活用',
+    step3Desc: '個別タグ、全タグをコピーまたはエクスポートして活用できます。',
+    faqTitle: 'よくある質問',
+    faq1q: 'YouTube動画タグとは？',
+    faq1a: 'YouTubeタグはクリエイターが動画に追加するキーワードで、YouTubeがコンテンツを理解するのに役立ちます。',
+    faq2q: 'このツールは無料ですか？',
+    faq2a: 'はい！TagExtract Proは完全無料です。公式YouTube Data APIを使用しています。',
+    faq3q: 'すべてのYouTube動画のタグを見ることができますか？',
+    faq3a: 'すべての公開YouTube動画のタグを抽出できます。',
+    faq4q: '抽出したタグを自分の動画にどう活用しますか？',
+    faq4a: '人気動画のタグを分析し、自分のコンテンツに合わせて活用してください。',
+    faq5q: 'タグ比較機能とは？',
+    faq5a: '2つのYouTube動画のタグを並べて比較し、共通タグと固有タグを表示します。',
+    disclaimer: 'このツールは公式YouTube Data APIを使用しています。YouTubeまたはGoogleとは提携していません。',
+    noTags: 'この動画には公開タグがありません。',
+    noMatch: 'フィルターに一致するタグがありません。',
+    errEmpty: 'YouTube動画のURLを入力してください。',
+    errInvalid: '無効なYouTube URLです。正しいリンクを入力してください。',
+    errBothUrls: '比較するには両方のURLを入力してください。',
+    copied: 'コピーしました！',
+    shareCopied: '共有リンクをクリップボードにコピーしました！',
+  },
+  es: {
+    tagline: 'Extrae etiquetas ocultas de videos de YouTube al instante — Herramienta SEO gratuita',
+    modeSingle: 'Video individual',
+    modeCompare: 'Comparar etiquetas',
+    inputPlaceholder: 'Pega la URL del video de YouTube aquí...',
+    inputPlaceholder2: 'Pega la URL del segundo video de YouTube para comparar...',
+    extractBtn: 'Extraer etiquetas',
+    urlHint: 'Compatible con youtube.com, youtu.be y YouTube Shorts',
+    recentSearches: 'Búsquedas recientes',
+    clearHistory: 'Borrar',
+    extracting: 'Extrayendo etiquetas...',
+    extractedTags: 'Etiquetas extraídas',
+    copyAll: 'Copiar todo',
+    hashtags: 'Hashtags',
+    export: 'Exportar',
+    share: 'Compartir',
+    totalChars: 'Caracteres totales',
+    filterPlaceholder: 'Filtrar etiquetas...',
+    sortDefault: 'Predeterminado',
+    sortLength: 'Longitud',
+    clickHint: 'Haz clic en cualquier etiqueta para copiarla',
+    descKeywords: 'Palabras clave de la descripción',
+    keywordInfo: 'Palabras clave principales extraídas de la descripción del video',
+    compareTitle: 'Comparación de etiquetas',
+    commonTags: 'Etiquetas comunes',
+    onlyVideo1: 'Solo en Video 1',
+    onlyVideo2: 'Solo en Video 2',
+    howItWorks: 'Cómo funciona',
+    step1Title: 'Pega la URL',
+    step1Desc: 'Copia la URL de un video de YouTube y pégala en la barra de búsqueda.',
+    step2Title: 'Extrae etiquetas',
+    step2Desc: 'Haz clic en "Extraer etiquetas" y obtendremos las etiquetas ocultas con la API.',
+    step3Title: 'Copia y usa',
+    step3Desc: 'Copia etiquetas individuales, todas a la vez, o expórtalas para tus videos.',
+    faqTitle: 'Preguntas frecuentes',
+    faq1q: '¿Qué son las etiquetas de YouTube?',
+    faq1a: 'Las etiquetas son palabras clave que los creadores agregan a sus videos para ayudar a YouTube a entender el contenido.',
+    faq2q: '¿Es gratuita esta herramienta?',
+    faq2a: '¡Sí! TagExtract Pro es completamente gratuito. Usamos la API oficial de YouTube.',
+    faq3q: '¿Puedo ver las etiquetas de cualquier video?',
+    faq3a: 'Puedes extraer etiquetas de cualquier video público de YouTube.',
+    faq4q: '¿Cómo puedo usar las etiquetas en mis propios videos?',
+    faq4a: 'Estudia las etiquetas de videos populares en tu nicho y adáptalas para tu contenido.',
+    faq5q: '¿Qué es la función de comparar etiquetas?',
+    faq5a: 'Permite analizar dos videos lado a lado, mostrando etiquetas comunes y únicas de cada uno.',
+    disclaimer: 'Esta herramienta usa la API oficial de YouTube. No afiliado con YouTube o Google.',
+    noTags: 'Este video no tiene etiquetas públicas.',
+    noMatch: 'Ninguna etiqueta coincide con tu filtro.',
+    errEmpty: 'Por favor ingresa una URL de video de YouTube.',
+    errInvalid: 'URL de YouTube inválida. Ingresa un enlace válido.',
+    errBothUrls: 'Ingresa ambas URLs de YouTube para comparar.',
+    copied: '¡Copiado!',
+    shareCopied: '¡Enlace de compartir copiado al portapapeles!',
+  },
+};
+
+let currentLang = 'en';
+
+function t(key) {
+  return TRANSLATIONS[currentLang]?.[key] || TRANSLATIONS.en[key] || key;
+}
+
+function applyTranslations() {
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    const text = t(key);
+    if (text) el.textContent = text;
+  });
+
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    const text = t(key);
+    if (text) el.placeholder = text;
+  });
+
+  document.documentElement.lang = currentLang;
+}
+
+function setLanguage(lang) {
+  if (!TRANSLATIONS[lang]) return;
+  currentLang = lang;
+  localStorage.setItem('tagextract_lang', lang);
+  applyTranslations();
+}
+
+function initI18n() {
+  const saved = localStorage.getItem('tagextract_lang');
+  if (saved && TRANSLATIONS[saved]) {
+    currentLang = saved;
+  }
+  const langSelect = document.getElementById('lang-select');
+  if (langSelect) {
+    langSelect.value = currentLang;
+    langSelect.addEventListener('change', (e) => setLanguage(e.target.value));
+  }
+  applyTranslations();
+}
+
+initI18n();

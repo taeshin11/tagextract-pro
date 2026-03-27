@@ -65,11 +65,19 @@
     <div class="container header-inner">
       <div>
         <h1 class="logo">🏷️ TagExtract <span class="logo-accent">Pro</span></h1>
-        <p class="tagline">Extract Hidden YouTube Video Tags Instantly — Free SEO Tool for Creators</p>
+        <p class="tagline" data-i18n="tagline">Extract Hidden YouTube Video Tags Instantly — Free SEO Tool for Creators</p>
       </div>
-      <button id="theme-toggle" class="theme-toggle" aria-label="Toggle light/dark theme" title="Toggle theme">
-        🌙
-      </button>
+      <div class="header-controls">
+        <select id="lang-select" class="lang-select" aria-label="Select language">
+          <option value="en">EN</option>
+          <option value="ko">KO</option>
+          <option value="ja">JA</option>
+          <option value="es">ES</option>
+        </select>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle light/dark theme" title="Toggle theme">
+          🌙
+        </button>
+      </div>
     </div>
   </header>
 
@@ -85,6 +93,12 @@
   <main class="main">
     <div class="container">
 
+      <!-- Mode Tabs -->
+      <div class="mode-tabs">
+        <button class="mode-tab active" data-mode="single" data-i18n="modeSingle">Single Video</button>
+        <button class="mode-tab" data-mode="compare" data-i18n="modeCompare">Compare Tags</button>
+      </div>
+
       <!-- Search Section -->
       <section class="search-section" aria-label="YouTube URL Input">
         <div class="search-box">
@@ -96,23 +110,38 @@
             placeholder="Paste YouTube video URL here (e.g., https://www.youtube.com/watch?v=...)"
             autocomplete="off"
             aria-describedby="url-hint"
+            data-i18n-placeholder="inputPlaceholder"
           >
           <button id="paste-btn" class="btn-paste" aria-label="Paste from clipboard" title="Paste from clipboard">
             📎
           </button>
           <button id="extract-btn" class="btn-extract" aria-label="Extract Tags">
             <span class="btn-icon">🔍</span>
-            <span class="btn-text">Extract Tags</span>
+            <span class="btn-text" data-i18n="extractBtn">Extract Tags</span>
           </button>
         </div>
-        <p id="url-hint" class="hint-text">Supports youtube.com, youtu.be, and YouTube Shorts URLs &nbsp;|&nbsp; <kbd>Ctrl+V</kbd> to paste, <kbd>Enter</kbd> to extract</p>
+
+        <!-- Compare Mode: Second URL input -->
+        <div id="compare-input" class="search-box compare-search-box" hidden>
+          <label for="youtube-url-2" class="sr-only">Enter second YouTube Video URL</label>
+          <input
+            type="url"
+            id="youtube-url-2"
+            class="search-input"
+            placeholder="Paste second YouTube video URL to compare..."
+            autocomplete="off"
+            data-i18n-placeholder="inputPlaceholder2"
+          >
+        </div>
+
+        <p id="url-hint" class="hint-text" data-i18n="urlHint">Supports youtube.com, youtu.be, and YouTube Shorts URLs &nbsp;|&nbsp; <kbd>Ctrl+V</kbd> to paste, <kbd>Enter</kbd> to extract</p>
       </section>
 
       <!-- Recent Searches -->
       <div id="history-section" class="history-section" hidden>
         <div class="history-header">
-          <span class="history-label">Recent Searches</span>
-          <button id="clear-history-btn" class="btn-clear-history" aria-label="Clear search history">Clear</button>
+          <span class="history-label" data-i18n="recentSearches">Recent Searches</span>
+          <button id="clear-history-btn" class="btn-clear-history" aria-label="Clear search history" data-i18n="clearHistory">Clear</button>
         </div>
         <div id="history-list" class="history-list"></div>
       </div>
@@ -123,7 +152,7 @@
       <!-- Loading Spinner -->
       <div id="loading" class="loading" hidden>
         <div class="spinner"></div>
-        <p>Extracting tags...</p>
+        <p data-i18n="extracting">Extracting tags...</p>
       </div>
 
       <!-- Results Dashboard -->
@@ -148,23 +177,26 @@
         <!-- Tags Section -->
         <div class="tags-section">
           <div class="tags-header">
-            <h3 class="tags-title">🏷️ Extracted Tags <span id="tag-count" class="tag-count"></span></h3>
+            <h3 class="tags-title">🏷️ <span data-i18n="extractedTags">Extracted Tags</span> <span id="tag-count" class="tag-count"></span></h3>
             <div class="tags-actions">
               <button id="copy-tags-btn" class="btn-copy" aria-label="Copy all tags to clipboard">
-                📋 Copy All
+                📋 <span data-i18n="copyAll">Copy All</span>
               </button>
               <button id="copy-hashtags-btn" class="btn-copy" aria-label="Copy tags as hashtags">
-                # Hashtags
+                # <span data-i18n="hashtags">Hashtags</span>
               </button>
               <button id="export-txt-btn" class="btn-copy" aria-label="Download tags as text file">
-                📥 Export
+                📥 <span data-i18n="export">Export</span>
+              </button>
+              <button id="share-btn" class="btn-copy" aria-label="Share results link">
+                🔗 <span data-i18n="share">Share</span>
               </button>
             </div>
           </div>
 
           <!-- Tag Stats Bar -->
           <div id="tag-stats" class="tag-stats" hidden>
-            <span class="tag-stat-item">Total characters: <strong id="tag-char-count">0</strong> / 500</span>
+            <span class="tag-stat-item"><span data-i18n="totalChars">Total characters</span>: <strong id="tag-char-count">0</strong> / 500</span>
             <div class="tag-stat-bar">
               <div id="tag-char-bar" class="tag-char-bar" style="width: 0%"></div>
             </div>
@@ -178,59 +210,95 @@
               placeholder="Filter tags..."
               autocomplete="off"
               hidden
+              data-i18n-placeholder="filterPlaceholder"
             >
             <div class="tags-sort-btns" id="tags-sort-btns" hidden>
-              <button class="sort-btn active" data-sort="default">Default</button>
+              <button class="sort-btn active" data-sort="default" data-i18n="sortDefault">Default</button>
               <button class="sort-btn" data-sort="az">A-Z</button>
-              <button class="sort-btn" data-sort="length">Length</button>
+              <button class="sort-btn" data-sort="length" data-i18n="sortLength">Length</button>
             </div>
           </div>
           <div id="tags-container" class="tags-container" role="list" aria-live="polite" aria-label="Video tags"></div>
-          <p class="tag-click-hint" id="tag-click-hint" hidden>Click any tag to copy it</p>
+          <p class="tag-click-hint" id="tag-click-hint" hidden data-i18n="clickHint">Click any tag to copy it</p>
+        </div>
+
+        <!-- Description Keywords Section -->
+        <div id="keywords-section" class="tags-section keywords-section" hidden>
+          <div class="tags-header">
+            <h3 class="tags-title">📝 <span data-i18n="descKeywords">Description Keywords</span> <span id="keyword-count" class="tag-count"></span></h3>
+            <button id="copy-keywords-btn" class="btn-copy" aria-label="Copy keywords">
+              📋 <span data-i18n="copyAll">Copy All</span>
+            </button>
+          </div>
+          <p class="keyword-info" data-i18n="keywordInfo">Top keywords extracted from the video description (excluding common words)</p>
+          <div id="keywords-container" class="tags-container" role="list"></div>
         </div>
 
       </section>
 
+      <!-- Compare Results -->
+      <section id="compare-results" class="results-dashboard" hidden>
+        <h3 class="section-title" data-i18n="compareTitle">Tag Comparison</h3>
+        <div class="compare-grid">
+          <div class="compare-col">
+            <h4 class="compare-col-title" data-i18n="commonTags">Common Tags</h4>
+            <div id="compare-common" class="tags-container"></div>
+          </div>
+          <div class="compare-col">
+            <h4 class="compare-col-title" data-i18n="onlyVideo1">Only in Video 1</h4>
+            <div id="compare-only1" class="tags-container"></div>
+          </div>
+          <div class="compare-col">
+            <h4 class="compare-col-title" data-i18n="onlyVideo2">Only in Video 2</h4>
+            <div id="compare-only2" class="tags-container"></div>
+          </div>
+        </div>
+      </section>
+
       <!-- How It Works Section -->
       <section class="how-it-works">
-        <h2 class="section-title">How It Works</h2>
+        <h2 class="section-title" data-i18n="howItWorks">How It Works</h2>
         <div class="steps-grid">
           <div class="step-card">
             <div class="step-number">1</div>
-            <h3>Paste URL</h3>
-            <p>Copy a YouTube video URL and paste it into the search bar above.</p>
+            <h3 data-i18n="step1Title">Paste URL</h3>
+            <p data-i18n="step1Desc">Copy a YouTube video URL and paste it into the search bar above.</p>
           </div>
           <div class="step-card">
             <div class="step-number">2</div>
-            <h3>Extract Tags</h3>
-            <p>Click "Extract Tags" and we'll fetch all hidden tags using the YouTube API.</p>
+            <h3 data-i18n="step2Title">Extract Tags</h3>
+            <p data-i18n="step2Desc">Click "Extract Tags" and we'll fetch all hidden tags using the YouTube API.</p>
           </div>
           <div class="step-card">
             <div class="step-number">3</div>
-            <h3>Copy & Use</h3>
-            <p>Copy individual tags, all tags at once, or export them for your own videos.</p>
+            <h3 data-i18n="step3Title">Copy & Use</h3>
+            <p data-i18n="step3Desc">Copy individual tags, all tags at once, or export them for your own videos.</p>
           </div>
         </div>
       </section>
 
       <!-- FAQ Section for SEO -->
       <section class="faq-section">
-        <h2 class="section-title">Frequently Asked Questions</h2>
+        <h2 class="section-title" data-i18n="faqTitle">Frequently Asked Questions</h2>
         <details class="faq-item">
-          <summary>What are YouTube video tags?</summary>
-          <p>YouTube tags are keywords that creators add to their videos to help YouTube understand the content and context. Tags influence search rankings and video recommendations.</p>
+          <summary data-i18n="faq1q">What are YouTube video tags?</summary>
+          <p data-i18n="faq1a">YouTube tags are keywords that creators add to their videos to help YouTube understand the content and context. Tags influence search rankings and video recommendations.</p>
         </details>
         <details class="faq-item">
-          <summary>Is this tool free to use?</summary>
-          <p>Yes! TagExtract Pro is completely free. We use the official YouTube Data API to fetch video information, and there are no hidden fees or subscriptions.</p>
+          <summary data-i18n="faq2q">Is this tool free to use?</summary>
+          <p data-i18n="faq2a">Yes! TagExtract Pro is completely free. We use the official YouTube Data API to fetch video information, and there are no hidden fees or subscriptions.</p>
         </details>
         <details class="faq-item">
-          <summary>Can I see tags from any YouTube video?</summary>
-          <p>You can extract tags from any public YouTube video. Some videos may not have tags set by the creator, in which case the tool will let you know.</p>
+          <summary data-i18n="faq3q">Can I see tags from any YouTube video?</summary>
+          <p data-i18n="faq3a">You can extract tags from any public YouTube video. Some videos may not have tags set by the creator, in which case the tool will let you know.</p>
         </details>
         <details class="faq-item">
-          <summary>How can I use extracted tags for my own videos?</summary>
-          <p>Study the tags used by top-performing videos in your niche. Use the "Copy All" button to quickly grab tags, then adapt them for your own content. The character counter helps you stay within YouTube's 500-character tag limit.</p>
+          <summary data-i18n="faq4q">How can I use extracted tags for my own videos?</summary>
+          <p data-i18n="faq4a">Study the tags used by top-performing videos in your niche. Use the "Copy All" button to quickly grab tags, then adapt them for your own content. The character counter helps you stay within YouTube's 500-character tag limit.</p>
+        </details>
+        <details class="faq-item">
+          <summary data-i18n="faq5q">What is the Compare Tags feature?</summary>
+          <p data-i18n="faq5a">Compare Tags lets you analyze two YouTube videos side-by-side, showing common tags and unique tags for each video. Great for competitive analysis and finding tag gaps.</p>
         </details>
       </section>
 
@@ -251,7 +319,7 @@
       <div class="footer-content">
         <div class="footer-info">
           <p>&copy; 2026 TagExtract Pro. Free YouTube SEO Tool.</p>
-          <p class="footer-disclaimer">This tool uses the official YouTube Data API. Not affiliated with YouTube or Google.</p>
+          <p class="footer-disclaimer" data-i18n="disclaimer">This tool uses the official YouTube Data API. Not affiliated with YouTube or Google.</p>
         </div>
         <div class="visitor-counter">
           <span class="counter-item">👁️ Today: <span id="today-visitors">-</span></span>
@@ -265,6 +333,7 @@
   <!-- Toast container -->
   <div id="toast" class="toast" aria-live="polite"></div>
 
+  <script src="i18n.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

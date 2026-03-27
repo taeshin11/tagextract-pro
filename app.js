@@ -9,11 +9,14 @@ const YT_TAG_CHAR_LIMIT = 500;
 
 // DOM Elements
 const urlInput = document.getElementById('youtube-url');
+const urlInput2 = document.getElementById('youtube-url-2');
+const compareInput = document.getElementById('compare-input');
 const extractBtn = document.getElementById('extract-btn');
 const pasteBtn = document.getElementById('paste-btn');
 const errorMsg = document.getElementById('error-msg');
 const loading = document.getElementById('loading');
 const results = document.getElementById('results');
+const compareResults = document.getElementById('compare-results');
 const videoThumbnail = document.getElementById('video-thumbnail');
 const videoTitle = document.getElementById('video-title');
 const videoChannel = document.getElementById('video-channel');
@@ -25,6 +28,7 @@ const tagsContainer = document.getElementById('tags-container');
 const copyTagsBtn = document.getElementById('copy-tags-btn');
 const copyHashtagsBtn = document.getElementById('copy-hashtags-btn');
 const exportTxtBtn = document.getElementById('export-txt-btn');
+const shareBtn = document.getElementById('share-btn');
 const tagFilter = document.getElementById('tag-filter');
 const tagsSortBtns = document.getElementById('tags-sort-btns');
 const tagClickHint = document.getElementById('tag-click-hint');
@@ -36,11 +40,17 @@ const historyList = document.getElementById('history-list');
 const clearHistoryBtn = document.getElementById('clear-history-btn');
 const themeToggle = document.getElementById('theme-toggle');
 const toastEl = document.getElementById('toast');
+const keywordsSection = document.getElementById('keywords-section');
+const keywordsContainer = document.getElementById('keywords-container');
+const keywordCount = document.getElementById('keyword-count');
+const copyKeywordsBtn = document.getElementById('copy-keywords-btn');
 
 let currentTags = [];
+let currentKeywords = [];
 let currentSort = 'default';
+let currentMode = 'single';
+let currentVideoId = '';
 let toastTimer = null;
-const COPY_ORIGINAL_TEXT = '📋 Copy All';
 
 // ===========================
 // Theme Toggle
@@ -67,6 +77,22 @@ themeToggle.addEventListener('click', () => {
 });
 
 initTheme();
+
+// ===========================
+// Mode Tabs (Single / Compare)
+// ===========================
+document.querySelectorAll('.mode-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.mode-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    currentMode = tab.dataset.mode;
+
+    compareInput.hidden = currentMode !== 'compare';
+    results.hidden = true;
+    compareResults.hidden = true;
+    hideError();
+  });
+});
 
 // ===========================
 // Video ID Extraction
@@ -128,6 +154,46 @@ async function fetchVideoData(videoId) {
 }
 
 // ===========================
+// Description Keyword Extraction
+// ===========================
+const STOP_WORDS = new Set([
+  'the','a','an','and','or','but','in','on','at','to','for','of','with','by',
+  'from','is','it','this','that','was','are','be','has','had','have','will',
+  'can','do','does','did','not','no','so','if','its','my','your','our',
+  'their','he','she','we','you','they','i','me','him','her','us','them',
+  'what','which','who','when','where','how','all','each','every','both',
+  'more','most','other','some','such','than','too','very','just','about',
+  'also','been','being','between','into','through','during','before','after',
+  'above','below','up','down','out','off','over','under','again','then',
+  'here','there','these','those','am','as','would','could','should','may',
+  'might','shall','like','get','got','go','going','make','know','see',
+  'come','take','want','use','find','give','tell','work','call','try',
+  'need','become','leave','keep','let','begin','show','hear','play','run',
+  'move','live','believe','http','https','www','com','video','subscribe',
+  'channel','check','link','follow','watch','click','new','one','two',
+]);
+
+function extractKeywords(description) {
+  if (!description) return [];
+
+  const words = description
+    .toLowerCase()
+    .replace(/https?:\/\/\S+/g, '')
+    .replace(/[^a-zA-Z0-9\s\u3000-\u9FFF\uAC00-\uD7AF]/g, ' ')
+    .split(/\s+/)
+    .filter(w => w.length > 2 && !STOP_WORDS.has(w));
+
+  const freq = {};
+  words.forEach(w => { freq[w] = (freq[w] || 0) + 1; });
+
+  return Object.entries(freq)
+    .filter(([, count]) => count >= 2)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 20)
+    .map(([word, count]) => ({ word, count }));
+}
+
+// ===========================
 // Render Results
 // ===========================
 function renderResults(video) {
@@ -149,13 +215,12 @@ function renderResults(video) {
 
   const tags = snippet.tags || [];
   currentTags = tags;
+  currentVideoId = video.id;
   currentSort = 'default';
   tagCount.textContent = `(${tags.length} tags)`;
 
-  // Tag character count bar
   updateTagCharBar(tags);
 
-  // Show filter/sort controls if there are tags
   if (tags.length > 0) {
     tagFilter.hidden = false;
     tagsSortBtns.hidden = false;
@@ -169,13 +234,39 @@ function renderResults(video) {
     tagStats.hidden = true;
   }
 
-  // Reset sort buttons
   tagsSortBtns.querySelectorAll('.sort-btn').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.sort === 'default');
   });
 
   renderTags(tags);
   results.hidden = false;
+  compareResults.hidden = true;
+
+  // Description keywords
+  const keywords = extractKeywords(snippet.description);
+  currentKeywords = keywords;
+  if (keywords.length > 0) {
+    keywordsSection.hidden = false;
+    keywordCount.textContent = `(${keywords.length})`;
+    keywordsContainer.innerHTML = '';
+    keywords.forEach((kw, i) => {
+      const chip = document.createElement('span');
+      chip.className = 'tag-chip keyword';
+      chip.textContent = `${kw.word} (${kw.count})`;
+      chip.tabIndex = 0;
+      chip.title = 'Click to copy';
+      chip.style.animationDelay = `${Math.min(i * 25, 500)}ms`;
+      chip.addEventListener('click', () => {
+        copyToClipboard(kw.word);
+        chip.classList.add('copied');
+        showToast(`Copied: "${kw.word}"`);
+        setTimeout(() => chip.classList.remove('copied'), 1500);
+      });
+      keywordsContainer.appendChild(chip);
+    });
+  } else {
+    keywordsSection.hidden = true;
+  }
 
   // Save to history
   saveToHistory({
@@ -188,6 +279,88 @@ function renderResults(video) {
   results.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
+// ===========================
+// Compare Mode
+// ===========================
+async function handleCompare() {
+  hideError();
+  results.hidden = true;
+  compareResults.hidden = true;
+
+  const url1 = urlInput.value.trim();
+  const url2 = urlInput2.value.trim();
+
+  if (!url1 || !url2) {
+    showError(t('errBothUrls'));
+    return;
+  }
+
+  const id1 = extractVideoId(url1);
+  const id2 = extractVideoId(url2);
+
+  if (!id1 || !id2) {
+    showError(t('errInvalid'));
+    return;
+  }
+
+  setLoading(true);
+
+  try {
+    const [video1, video2] = await Promise.all([
+      fetchVideoData(id1),
+      fetchVideoData(id2),
+    ]);
+
+    const tags1 = video1.snippet.tags || [];
+    const tags2 = video2.snippet.tags || [];
+    const set1 = new Set(tags1.map(t => t.toLowerCase()));
+    const set2 = new Set(tags2.map(t => t.toLowerCase()));
+
+    const common = tags1.filter(t => set2.has(t.toLowerCase()));
+    const only1 = tags1.filter(t => !set2.has(t.toLowerCase()));
+    const only2 = tags2.filter(t => !set1.has(t.toLowerCase()));
+
+    renderCompareColumn('compare-common', common, 'common');
+    renderCompareColumn('compare-only1', only1, '');
+    renderCompareColumn('compare-only2', only2, 'unique');
+
+    compareResults.hidden = false;
+    compareResults.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } catch (err) {
+    showError(err.message);
+  } finally {
+    setLoading(false);
+  }
+}
+
+function renderCompareColumn(containerId, tags, extraClass) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = '';
+
+  if (tags.length === 0) {
+    container.innerHTML = `<p style="color: var(--text-muted); font-size: 0.8rem;">None</p>`;
+    return;
+  }
+
+  tags.forEach((tag, i) => {
+    const chip = document.createElement('span');
+    chip.className = `tag-chip ${extraClass}`;
+    chip.textContent = tag;
+    chip.style.animationDelay = `${Math.min(i * 25, 400)}ms`;
+    chip.title = 'Click to copy';
+    chip.addEventListener('click', () => {
+      copyToClipboard(tag);
+      chip.classList.add('copied');
+      showToast(`Copied: "${tag}"`);
+      setTimeout(() => chip.classList.remove('copied'), 1500);
+    });
+    container.appendChild(chip);
+  });
+}
+
+// ===========================
+// Render Tags
+// ===========================
 function updateTagCharBar(tags) {
   const totalChars = tags.join(',').length;
   const pct = Math.min((totalChars / YT_TAG_CHAR_LIMIT) * 100, 100);
@@ -207,12 +380,12 @@ function renderTags(tags) {
   tagsContainer.innerHTML = '';
 
   if (tags.length === 0 && currentTags.length === 0) {
-    tagsContainer.innerHTML = '<p style="color: var(--text-muted); font-size: 0.9rem;">This video has no public tags.</p>';
+    tagsContainer.innerHTML = `<p style="color: var(--text-muted); font-size: 0.9rem;">${t('noTags')}</p>`;
     return;
   }
 
   if (tags.length === 0) {
-    tagsContainer.innerHTML = '<p style="color: var(--text-muted); font-size: 0.9rem;">No tags match your filter.</p>';
+    tagsContainer.innerHTML = `<p style="color: var(--text-muted); font-size: 0.9rem;">${t('noMatch')}</p>`;
     return;
   }
 
@@ -243,7 +416,7 @@ function renderTags(tags) {
 function copyTagChip(chip, tag) {
   copyToClipboard(tag);
   chip.classList.add('copied');
-  showToast(`Copied: "${tag}"`);
+  showToast(`${t('copied')} "${tag}"`);
   setTimeout(() => chip.classList.remove('copied'), 1500);
 }
 
@@ -393,9 +566,10 @@ function sendToWebhook(url, videoId) {
 copyTagsBtn.addEventListener('click', () => {
   if (currentTags.length === 0) return;
   copyToClipboard(currentTags.join(', '));
-  copyTagsBtn.textContent = '✅ Copied!';
+  const span = copyTagsBtn.querySelector('[data-i18n]');
+  if (span) span.textContent = t('copied');
   showToast(`Copied ${currentTags.length} tags`);
-  setTimeout(() => { copyTagsBtn.textContent = COPY_ORIGINAL_TEXT; }, 2000);
+  setTimeout(() => { if (span) span.textContent = t('copyAll'); }, 2000);
 });
 
 // ===========================
@@ -405,9 +579,10 @@ copyHashtagsBtn.addEventListener('click', () => {
   if (currentTags.length === 0) return;
   const hashtags = currentTags.map(t => '#' + t.replace(/\s+/g, '')).join(' ');
   copyToClipboard(hashtags);
-  copyHashtagsBtn.textContent = '✅ Copied!';
+  const span = copyHashtagsBtn.querySelector('[data-i18n]');
+  if (span) span.textContent = t('copied');
   showToast(`Copied ${currentTags.length} hashtags`);
-  setTimeout(() => { copyHashtagsBtn.textContent = '# Hashtags'; }, 2000);
+  setTimeout(() => { if (span) span.textContent = t('hashtags'); }, 2000);
 });
 
 // ===========================
@@ -430,6 +605,26 @@ exportTxtBtn.addEventListener('click', () => {
 });
 
 // ===========================
+// Share Results
+// ===========================
+shareBtn.addEventListener('click', () => {
+  if (!currentVideoId) return;
+  const shareUrl = `${window.location.origin}${window.location.pathname}?v=${currentVideoId}`;
+  copyToClipboard(shareUrl);
+  showToast(t('shareCopied'));
+});
+
+// ===========================
+// Copy Keywords
+// ===========================
+copyKeywordsBtn.addEventListener('click', () => {
+  if (currentKeywords.length === 0) return;
+  const kwText = currentKeywords.map(kw => kw.word).join(', ');
+  copyToClipboard(kwText);
+  showToast(`Copied ${currentKeywords.length} keywords`);
+});
+
+// ===========================
 // Search History
 // ===========================
 function getHistory() {
@@ -442,7 +637,6 @@ function getHistory() {
 
 function saveToHistory(entry) {
   let history = getHistory();
-  // Remove duplicate
   history = history.filter(h => h.videoId !== entry.videoId);
   history.unshift(entry);
   if (history.length > MAX_HISTORY) history = history.slice(0, MAX_HISTORY);
@@ -463,9 +657,10 @@ function renderHistory() {
   history.forEach(item => {
     const el = document.createElement('div');
     el.className = 'history-item';
+    const safeTitle = item.title.replace(/</g, '&lt;').replace(/>/g, '&gt;');
     el.innerHTML = `
       <img class="history-thumb" src="${item.thumb}" alt="" loading="lazy">
-      <span class="history-title">${item.title}</span>
+      <span class="history-title">${safeTitle}</span>
     `;
     el.addEventListener('click', () => {
       urlInput.value = item.url;
@@ -481,7 +676,6 @@ clearHistoryBtn.addEventListener('click', () => {
   showToast('History cleared');
 });
 
-// Initialize history on load
 renderHistory();
 
 // ===========================
@@ -490,17 +684,22 @@ renderHistory();
 async function handleExtract() {
   hideError();
   results.hidden = true;
+  compareResults.hidden = true;
+
+  if (currentMode === 'compare') {
+    return handleCompare();
+  }
 
   const url = urlInput.value.trim();
   if (!url) {
-    showError('Please enter a YouTube video URL.');
+    showError(t('errEmpty'));
     urlInput.focus();
     return;
   }
 
   const videoId = extractVideoId(url);
   if (!videoId) {
-    showError('Invalid YouTube URL. Please enter a valid video link.');
+    showError(t('errInvalid'));
     urlInput.focus();
     return;
   }
@@ -522,15 +721,33 @@ extractBtn.addEventListener('click', handleExtract);
 urlInput.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') handleExtract();
 });
+urlInput2.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') handleExtract();
+});
 
 // Auto-extract on paste into input
 urlInput.addEventListener('paste', () => {
+  if (currentMode === 'compare') return;
   setTimeout(() => {
     if (urlInput.value.trim() && extractVideoId(urlInput.value.trim())) {
       handleExtract();
     }
   }, 100);
 });
+
+// ===========================
+// URL Parameter Support (?v=VIDEO_ID)
+// ===========================
+function checkUrlParam() {
+  const params = new URLSearchParams(window.location.search);
+  const videoId = params.get('v');
+  if (videoId && /^[a-zA-Z0-9_-]{11}$/.test(videoId)) {
+    urlInput.value = `https://www.youtube.com/watch?v=${videoId}`;
+    handleExtract();
+  }
+}
+
+checkUrlParam();
 
 // ===========================
 // Visitor Counter

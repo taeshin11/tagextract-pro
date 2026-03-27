@@ -42,6 +42,14 @@
 
 html {
   scroll-behavior: smooth;
+  text-rendering: optimizeSpeed;
+}
+
+/* Performance: lazy-render below-fold content */
+.how-it-works,
+.faq-section {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 400px;
 }
 
 body {
@@ -406,6 +414,7 @@ body {
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
   margin: 0 auto 12px;
+  will-change: transform;
 }
 
 @keyframes spin {

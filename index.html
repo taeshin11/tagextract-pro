@@ -56,6 +56,12 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
+  <!-- Preconnect for performance -->
+  <link rel="preconnect" href="https://www.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://i.ytimg.com" crossorigin>
+  <link rel="dns-prefetch" href="https://www.googleapis.com">
+  <link rel="dns-prefetch" href="https://i.ytimg.com">
+
   <!-- Adsterra Popunder/Social Bar Placeholder -->
   <!-- ADSTERRA_POPUNDER: Paste your Adsterra Popunder or Social Bar script here -->
   <!-- <script src="//www.example.com/your-adsterra-zone-id.js"></script> -->
@@ -430,6 +436,13 @@
 
   <!-- Toast container -->
   <div id="toast" class="toast" aria-live="polite"></div>
+
+  <noscript>
+    <div style="text-align:center;padding:40px 20px;color:#e0e0e0;font-family:sans-serif;">
+      <h2>JavaScript Required</h2>
+      <p>TagExtract Pro requires JavaScript to function. Please enable JavaScript in your browser settings.</p>
+    </div>
+  </noscript>
 
   <script src="i18n.js"></script>
   <script src="app.js"></script>

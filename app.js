@@ -104,7 +104,8 @@ document.querySelectorAll('.mode-tab').forEach(tab => {
     compareInput.hidden = currentMode !== 'compare';
     bulkInput.hidden = currentMode !== 'bulk';
     // In bulk mode, hide single search box; show it otherwise
-    document.querySelector('.search-box').hidden = currentMode === 'bulk';
+    const mainSearchBox = document.querySelector('.search-box:not(.compare-search-box)');
+    if (mainSearchBox) mainSearchBox.hidden = currentMode === 'bulk';
     results.hidden = true;
     compareResults.hidden = true;
     bulkResults.hidden = true;
@@ -504,14 +505,22 @@ pasteBtn.addEventListener('click', async () => {
 });
 
 // ===========================
-// Tag Filtering
+// Tag Filtering (debounced)
 // ===========================
+let filterTimer = null;
 tagFilter.addEventListener('input', () => {
-  const query = tagFilter.value.toLowerCase().trim();
-  const filtered = query
-    ? getSortedTags().filter(tag => tag.toLowerCase().includes(query))
-    : getSortedTags();
-  renderTags(filtered);
+  clearTimeout(filterTimer);
+  filterTimer = setTimeout(() => {
+    const query = tagFilter.value.toLowerCase().trim();
+    const filtered = query
+      ? getSortedTags().filter(tag => tag.toLowerCase().includes(query))
+      : getSortedTags();
+    if (currentView === 'cloud') {
+      renderTagCloud(filtered);
+    } else {
+      renderTags(filtered);
+    }
+  }, 150);
 });
 
 // ===========================
@@ -693,14 +702,29 @@ function renderHistory() {
   history.forEach(item => {
     const el = document.createElement('div');
     el.className = 'history-item';
-    const safeTitle = item.title.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    el.innerHTML = `
-      <img class="history-thumb" src="${item.thumb}" alt="" loading="lazy">
-      <span class="history-title">${safeTitle}</span>
-    `;
+
+    const img = document.createElement('img');
+    img.className = 'history-thumb';
+    img.alt = '';
+    img.loading = 'lazy';
+    // Only allow YouTube thumbnail URLs
+    if (item.thumb && item.thumb.startsWith('https://i.ytimg.com/')) {
+      img.src = item.thumb;
+    }
+
+    const span = document.createElement('span');
+    span.className = 'history-title';
+    span.textContent = item.title || '';
+
+    el.appendChild(img);
+    el.appendChild(span);
     el.addEventListener('click', () => {
-      urlInput.value = item.url;
-      handleExtract();
+      // Validate URL before using
+      const vid = extractVideoId(item.url || '');
+      if (vid) {
+        urlInput.value = item.url;
+        handleExtract();
+      }
     });
     historyList.appendChild(el);
   });

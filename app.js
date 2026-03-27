@@ -65,6 +65,12 @@ const seoRing = document.getElementById('seo-ring');
 const seoRingValue = document.getElementById('seo-ring-value');
 const seoChecklist = document.getElementById('seo-checklist');
 const viewToggle = document.getElementById('view-toggle');
+const socialShare = document.getElementById('social-share');
+const basketSection = document.getElementById('tag-basket-section');
+const basketContainer = document.getElementById('basket-container');
+const basketCount = document.getElementById('basket-count');
+const copyBasketBtn = document.getElementById('copy-basket-btn');
+const clearBasketBtn = document.getElementById('clear-basket-btn');
 
 // ===========================
 // Theme Toggle
@@ -109,6 +115,11 @@ document.querySelectorAll('.mode-tab').forEach(tab => {
     results.hidden = true;
     compareResults.hidden = true;
     bulkResults.hidden = true;
+    seoScoreSection.hidden = true;
+    document.getElementById('tag-chart-section').hidden = true;
+    keywordsSection.hidden = true;
+    basketSection.hidden = getBasket().length > 0 ? false : true;
+    socialShare.hidden = true;
     hideError();
   });
 });
@@ -361,12 +372,12 @@ async function handleCompare() {
 
     const tags1 = video1.snippet.tags || [];
     const tags2 = video2.snippet.tags || [];
-    const set1 = new Set(tags1.map(t => t.toLowerCase()));
-    const set2 = new Set(tags2.map(t => t.toLowerCase()));
+    const set1 = new Set(tags1.map(x => x.toLowerCase()));
+    const set2 = new Set(tags2.map(x => x.toLowerCase()));
 
-    const common = tags1.filter(t => set2.has(t.toLowerCase()));
-    const only1 = tags1.filter(t => !set2.has(t.toLowerCase()));
-    const only2 = tags2.filter(t => !set1.has(t.toLowerCase()));
+    const common = tags1.filter(x => set2.has(x.toLowerCase()));
+    const only1 = tags1.filter(x => !set2.has(x.toLowerCase()));
+    const only2 = tags2.filter(x => !set1.has(x.toLowerCase()));
 
     renderCompareColumn('compare-common', common, 'common');
     renderCompareColumn('compare-only1', only1, '');
@@ -586,7 +597,11 @@ tagsSortBtns.addEventListener('click', (e) => {
   const query = tagFilter.value.toLowerCase().trim();
   const sorted = getSortedTags();
   const filtered = query ? sorted.filter(tag => tag.toLowerCase().includes(query)) : sorted;
-  renderTags(filtered);
+  if (currentView === 'cloud') {
+    renderTagCloud(filtered);
+  } else {
+    renderTags(filtered);
+  }
 });
 
 // ===========================
@@ -659,7 +674,7 @@ copyTagsBtn.addEventListener('click', () => {
 // ===========================
 copyHashtagsBtn.addEventListener('click', () => {
   if (currentTags.length === 0) return;
-  const hashtags = currentTags.map(t => '#' + t.replace(/\s+/g, '')).join(' ');
+  const hashtags = currentTags.map(tag => '#' + tag.replace(/\s+/g, '')).join(' ');
   copyToClipboard(hashtags);
   const span = copyHashtagsBtn.querySelector('[data-i18n]');
   if (span) span.textContent = t('copied');
@@ -1142,12 +1157,6 @@ initVisitorCounter();
 // ===========================
 // Tag Basket (collect tags across videos)
 // ===========================
-const basketSection = document.getElementById('tag-basket-section');
-const basketContainer = document.getElementById('basket-container');
-const basketCount = document.getElementById('basket-count');
-const copyBasketBtn = document.getElementById('copy-basket-btn');
-const clearBasketBtn = document.getElementById('clear-basket-btn');
-
 function getBasket() {
   try { return JSON.parse(localStorage.getItem('tagextract_basket') || '[]'); }
   catch { return []; }
@@ -1373,7 +1382,6 @@ function triggerConfetti() {
 // ===========================
 // Social Share Links
 // ===========================
-const socialShare = document.getElementById('social-share');
 const shareTwitter = document.getElementById('share-twitter');
 const shareFacebook = document.getElementById('share-facebook');
 const shareWhatsapp = document.getElementById('share-whatsapp');

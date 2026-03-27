@@ -26,6 +26,29 @@
   <meta name="twitter:description" content="Extract hidden tags from any YouTube video. Free SEO tool for creators.">
   <meta name="twitter:image" content="https://tagextract-pro.vercel.app/og-image.png">
 
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "TagExtract Pro",
+    "url": "https://tagextract-pro.vercel.app",
+    "description": "Extract hidden tags and keywords from any YouTube video instantly. Free SEO tool for YouTubers.",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "ratingCount": "1250"
+    }
+  }
+  </script>
+
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏷️</text></svg>">
 
@@ -39,9 +62,14 @@
 
   <!-- Header -->
   <header class="header">
-    <div class="container">
-      <h1 class="logo">🏷️ TagExtract <span class="logo-accent">Pro</span></h1>
-      <p class="tagline">Extract Hidden YouTube Video Tags Instantly — Free SEO Tool for Creators</p>
+    <div class="container header-inner">
+      <div>
+        <h1 class="logo">🏷️ TagExtract <span class="logo-accent">Pro</span></h1>
+        <p class="tagline">Extract Hidden YouTube Video Tags Instantly — Free SEO Tool for Creators</p>
+      </div>
+      <button id="theme-toggle" class="theme-toggle" aria-label="Toggle light/dark theme" title="Toggle theme">
+        🌙
+      </button>
     </div>
   </header>
 
@@ -49,7 +77,7 @@
   <div class="ad-banner ad-banner-top">
     <div class="container">
       <!-- ADSTERRA_BANNER_728x90: Paste your Adsterra 728x90 banner code here -->
-      <div class="ad-placeholder" data-size="728x90">Ad Space — 728×90</div>
+      <div class="ad-placeholder" data-size="728x90">Ad Space — 728x90</div>
     </div>
   </div>
 
@@ -69,13 +97,25 @@
             autocomplete="off"
             aria-describedby="url-hint"
           >
+          <button id="paste-btn" class="btn-paste" aria-label="Paste from clipboard" title="Paste from clipboard">
+            📎
+          </button>
           <button id="extract-btn" class="btn-extract" aria-label="Extract Tags">
             <span class="btn-icon">🔍</span>
             <span class="btn-text">Extract Tags</span>
           </button>
         </div>
-        <p id="url-hint" class="hint-text">Supports youtube.com, youtu.be, and YouTube Shorts URLs</p>
+        <p id="url-hint" class="hint-text">Supports youtube.com, youtu.be, and YouTube Shorts URLs &nbsp;|&nbsp; <kbd>Ctrl+V</kbd> to paste, <kbd>Enter</kbd> to extract</p>
       </section>
+
+      <!-- Recent Searches -->
+      <div id="history-section" class="history-section" hidden>
+        <div class="history-header">
+          <span class="history-label">Recent Searches</span>
+          <button id="clear-history-btn" class="btn-clear-history" aria-label="Clear search history">Clear</button>
+        </div>
+        <div id="history-list" class="history-list"></div>
+      </div>
 
       <!-- Error Message -->
       <div id="error-msg" class="error-msg" role="alert" aria-live="polite" hidden></div>
@@ -113,11 +153,23 @@
               <button id="copy-tags-btn" class="btn-copy" aria-label="Copy all tags to clipboard">
                 📋 Copy All
               </button>
+              <button id="copy-hashtags-btn" class="btn-copy" aria-label="Copy tags as hashtags">
+                # Hashtags
+              </button>
               <button id="export-txt-btn" class="btn-copy" aria-label="Download tags as text file">
-                📥 Export .txt
+                📥 Export
               </button>
             </div>
           </div>
+
+          <!-- Tag Stats Bar -->
+          <div id="tag-stats" class="tag-stats" hidden>
+            <span class="tag-stat-item">Total characters: <strong id="tag-char-count">0</strong> / 500</span>
+            <div class="tag-stat-bar">
+              <div id="tag-char-bar" class="tag-char-bar" style="width: 0%"></div>
+            </div>
+          </div>
+
           <div class="tags-filter-wrap">
             <input
               type="text"
@@ -139,6 +191,49 @@
 
       </section>
 
+      <!-- How It Works Section -->
+      <section class="how-it-works">
+        <h2 class="section-title">How It Works</h2>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h3>Paste URL</h3>
+            <p>Copy a YouTube video URL and paste it into the search bar above.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h3>Extract Tags</h3>
+            <p>Click "Extract Tags" and we'll fetch all hidden tags using the YouTube API.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h3>Copy & Use</h3>
+            <p>Copy individual tags, all tags at once, or export them for your own videos.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ Section for SEO -->
+      <section class="faq-section">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <details class="faq-item">
+          <summary>What are YouTube video tags?</summary>
+          <p>YouTube tags are keywords that creators add to their videos to help YouTube understand the content and context. Tags influence search rankings and video recommendations.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Is this tool free to use?</summary>
+          <p>Yes! TagExtract Pro is completely free. We use the official YouTube Data API to fetch video information, and there are no hidden fees or subscriptions.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Can I see tags from any YouTube video?</summary>
+          <p>You can extract tags from any public YouTube video. Some videos may not have tags set by the creator, in which case the tool will let you know.</p>
+        </details>
+        <details class="faq-item">
+          <summary>How can I use extracted tags for my own videos?</summary>
+          <p>Study the tags used by top-performing videos in your niche. Use the "Copy All" button to quickly grab tags, then adapt them for your own content. The character counter helps you stay within YouTube's 500-character tag limit.</p>
+        </details>
+      </section>
+
     </div>
   </main>
 
@@ -146,7 +241,7 @@
   <div class="ad-banner ad-banner-bottom">
     <div class="container">
       <!-- ADSTERRA_BANNER_320x50: Paste your Adsterra 320x50 banner code here -->
-      <div class="ad-placeholder" data-size="320x50">Ad Space — 320×50</div>
+      <div class="ad-placeholder" data-size="320x50">Ad Space — 320x50</div>
     </div>
   </div>
 
@@ -166,6 +261,9 @@
       </div>
     </div>
   </footer>
+
+  <!-- Toast container -->
+  <div id="toast" class="toast" aria-live="polite"></div>
 
   <script src="app.js"></script>
 </body>

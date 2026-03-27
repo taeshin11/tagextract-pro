@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO Meta Tags -->
+  <title>TagExtract Pro - Free YouTube Video Tag Extractor & SEO Tool</title>
+  <meta name="description" content="Extract hidden tags and keywords from any YouTube video instantly. Free SEO tool for YouTubers to discover video tags, optimize content, and grow your channel.">
+  <meta name="keywords" content="YouTube tag extractor, YouTube SEO tool, video tags, YouTube keywords, free tag extractor, YouTube optimization, video SEO, YouTube tags finder">
+  <meta name="author" content="TagExtract Pro">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://tagextract-pro.vercel.app/">
+
+  <!-- Open Graph Tags -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="TagExtract Pro - Free YouTube Video Tag Extractor">
+  <meta property="og:description" content="Extract hidden tags and keywords from any YouTube video instantly. Essential SEO tool for YouTubers.">
+  <meta property="og:url" content="https://tagextract-pro.vercel.app/">
+  <meta property="og:site_name" content="TagExtract Pro">
+  <meta property="og:image" content="https://tagextract-pro.vercel.app/og-image.png">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="TagExtract Pro - Free YouTube Video Tag Extractor">
+  <meta name="twitter:description" content="Extract hidden tags from any YouTube video. Free SEO tool for creators.">
+  <meta name="twitter:image" content="https://tagextract-pro.vercel.app/og-image.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏷️</text></svg>">
+
+  <!-- Adsterra Popunder/Social Bar Placeholder -->
+  <!-- ADSTERRA_POPUNDER: Paste your Adsterra Popunder or Social Bar script here -->
+  <!-- <script src="//www.example.com/your-adsterra-zone-id.js"></script> -->
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <h1 class="logo">🏷️ TagExtract <span class="logo-accent">Pro</span></h1>
+      <p class="tagline">Extract Hidden YouTube Video Tags Instantly — Free SEO Tool for Creators</p>
+    </div>
+  </header>
+
+  <!-- Adsterra Banner (Top) -->
+  <div class="ad-banner ad-banner-top">
+    <div class="container">
+      <!-- ADSTERRA_BANNER_728x90: Paste your Adsterra 728x90 banner code here -->
+      <div class="ad-placeholder" data-size="728x90">Ad Space — 728×90</div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="main">
+    <div class="container">
+
+      <!-- Search Section -->
+      <section class="search-section" aria-label="YouTube URL Input">
+        <div class="search-box">
+          <label for="youtube-url" class="sr-only">Enter YouTube Video URL</label>
+          <input
+            type="url"
+            id="youtube-url"
+            class="search-input"
+            placeholder="Paste YouTube video URL here (e.g., https://www.youtube.com/watch?v=...)"
+            autocomplete="off"
+            aria-describedby="url-hint"
+          >
+          <button id="extract-btn" class="btn-extract" aria-label="Extract Tags">
+            <span class="btn-icon">🔍</span>
+            <span class="btn-text">Extract Tags</span>
+          </button>
+        </div>
+        <p id="url-hint" class="hint-text">Supports youtube.com, youtu.be, and YouTube Shorts URLs</p>
+      </section>
+
+      <!-- Error Message -->
+      <div id="error-msg" class="error-msg" role="alert" aria-live="polite" hidden></div>
+
+      <!-- Loading Spinner -->
+      <div id="loading" class="loading" hidden>
+        <div class="spinner"></div>
+        <p>Extracting tags...</p>
+      </div>
+
+      <!-- Results Dashboard -->
+      <section id="results" class="results-dashboard" hidden aria-label="Extracted Video Data">
+
+        <!-- Video Info Card -->
+        <div class="video-card">
+          <div class="video-thumbnail-wrap">
+            <img id="video-thumbnail" class="video-thumbnail" src="" alt="Video thumbnail" loading="lazy">
+          </div>
+          <div class="video-info">
+            <h2 id="video-title" class="video-title"></h2>
+            <p id="video-channel" class="video-channel"></p>
+            <div class="video-stats">
+              <span id="video-views" class="stat"></span>
+              <span id="video-likes" class="stat"></span>
+              <span id="video-date" class="stat"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tags Section -->
+        <div class="tags-section">
+          <div class="tags-header">
+            <h3 class="tags-title">🏷️ Extracted Tags <span id="tag-count" class="tag-count"></span></h3>
+            <button id="copy-tags-btn" class="btn-copy" aria-label="Copy all tags to clipboard">
+              📋 Copy All Tags
+            </button>
+          </div>
+          <div id="tags-container" class="tags-container" aria-label="Video tags"></div>
+        </div>
+
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Adsterra Banner (Bottom) -->
+  <div class="ad-banner ad-banner-bottom">
+    <div class="container">
+      <!-- ADSTERRA_BANNER_320x50: Paste your Adsterra 320x50 banner code here -->
+      <div class="ad-placeholder" data-size="320x50">Ad Space — 320×50</div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-info">
+          <p>&copy; 2026 TagExtract Pro. Free YouTube SEO Tool.</p>
+          <p class="footer-disclaimer">This tool uses the official YouTube Data API. Not affiliated with YouTube or Google.</p>
+        </div>
+        <div class="visitor-counter">
+          <span class="counter-item">👁️ Today: <span id="today-visitors">-</span></span>
+          <span class="counter-divider">|</span>
+          <span class="counter-item">📊 Total: <span id="total-visitors">-</span></span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

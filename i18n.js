@@ -62,6 +62,11 @@ const TRANSLATIONS = {
     copied: 'Copied!',
     shareCopied: 'Share link copied to clipboard!',
     shareResults: 'Share this result:',
+    tagBasket: 'Tag Basket',
+    basketInfo: 'Save tags from multiple videos. Click + on any tag to add it, click a basket tag to remove.',
+    tagAnalysis: 'Tag Analysis',
+    tagLengthDist: 'Tag Length Distribution',
+    tagWordCount: 'Word Count per Tag',
   },
   ko: {
     tagline: '유튜브 영상의 숨겨진 태그를 즉시 추출 — 크리에이터를 위한 무료 SEO 도구',
@@ -122,6 +127,11 @@ const TRANSLATIONS = {
     copied: '복사됨!',
     shareCopied: '공유 링크가 클립보드에 복사되었습니다!',
     shareResults: '이 결과 공유:',
+    tagBasket: '태그 바구니',
+    basketInfo: '여러 영상의 태그를 저장하세요. +를 클릭하여 추가, 바구니 태그를 클릭하여 제거.',
+    tagAnalysis: '태그 분석',
+    tagLengthDist: '태그 길이 분포',
+    tagWordCount: '태그별 단어 수',
   },
   ja: {
     tagline: 'YouTube動画の隠しタグを即座に抽出 — クリエイター向け無料SEOツール',
@@ -182,6 +192,11 @@ const TRANSLATIONS = {
     copied: 'コピーしました！',
     shareCopied: '共有リンクをクリップボードにコピーしました！',
     shareResults: 'この結果を共有:',
+    tagBasket: 'タグバスケット',
+    basketInfo: '複数の動画からタグを保存。+をクリックして追加、バスケットのタグをクリックして削除。',
+    tagAnalysis: 'タグ分析',
+    tagLengthDist: 'タグの長さ分布',
+    tagWordCount: 'タグごとの単語数',
   },
   es: {
     tagline: 'Extrae etiquetas ocultas de videos de YouTube al instante — Herramienta SEO gratuita',
@@ -242,6 +257,11 @@ const TRANSLATIONS = {
     copied: '¡Copiado!',
     shareCopied: '¡Enlace de compartir copiado al portapapeles!',
     shareResults: 'Compartir este resultado:',
+    tagBasket: 'Canasta de etiquetas',
+    basketInfo: 'Guarda etiquetas de múltiples videos. Haz clic en + para agregar, clic en una etiqueta para quitar.',
+    tagAnalysis: 'Análisis de etiquetas',
+    tagLengthDist: 'Distribución de longitud',
+    tagWordCount: 'Palabras por etiqueta',
   },
 };
 

@@ -328,6 +328,19 @@
         <div id="bulk-results-list" class="bulk-results-list"></div>
       </section>
 
+      <!-- Tag Basket (collect tags across videos) -->
+      <section id="tag-basket-section" class="tags-section tag-basket-section" hidden>
+        <div class="tags-header">
+          <h3 class="tags-title">🧺 <span data-i18n="tagBasket">Tag Basket</span> <span id="basket-count" class="tag-count"></span></h3>
+          <div class="tags-actions">
+            <button id="copy-basket-btn" class="btn-copy" aria-label="Copy basket tags">📋 <span data-i18n="copyAll">Copy All</span></button>
+            <button id="clear-basket-btn" class="btn-copy" aria-label="Clear basket" style="color:var(--primary)">🗑 <span data-i18n="clearHistory">Clear</span></button>
+          </div>
+        </div>
+        <p class="keyword-info" data-i18n="basketInfo">Save tags from multiple videos here. Click any tag above with + to add it.</p>
+        <div id="basket-container" class="tags-container" role="list"></div>
+      </section>
+
       <!-- How It Works Section -->
       <section class="how-it-works">
         <h2 class="section-title" data-i18n="howItWorks">How It Works</h2>

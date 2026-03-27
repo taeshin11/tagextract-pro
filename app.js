@@ -425,14 +425,38 @@ function renderTags(tags) {
     return;
   }
 
+  // Tag type legend
+  const legend = document.createElement('div');
+  legend.className = 'tag-legend';
+  legend.innerHTML = `
+    <span class="tag-legend-item"><span class="tag-legend-dot short"></span>Short (1 word)</span>
+    <span class="tag-legend-item"><span class="tag-legend-dot medium"></span>Medium (2-3 words)</span>
+    <span class="tag-legend-item"><span class="tag-legend-dot longtail"></span>Long-tail (4+ words)</span>
+  `;
+  tagsContainer.appendChild(legend);
+
   tags.forEach((tag, i) => {
     const chip = document.createElement('span');
-    chip.className = 'tag-chip';
-    chip.textContent = tag;
+    const wordCount = tag.trim().split(/\s+/).length;
+    const typeClass = wordCount === 1 ? 'tag-short' : wordCount <= 3 ? 'tag-medium' : 'tag-longtail';
+    chip.className = `tag-chip ${typeClass}`;
     chip.role = 'listitem';
     chip.tabIndex = 0;
     chip.style.animationDelay = `${Math.min(i * 25, 500)}ms`;
-    chip.title = 'Click to copy';
+    chip.title = 'Click to copy, + to add to basket';
+
+    const text = document.createTextNode(tag);
+    chip.appendChild(text);
+
+    // Add to basket button
+    const addBtn = document.createElement('span');
+    addBtn.className = 'tag-add-btn';
+    addBtn.textContent = '+';
+    addBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      addToBasket(tag);
+    });
+    chip.appendChild(addBtn);
 
     chip.addEventListener('click', () => copyTagChip(chip, tag));
     chip.addEventListener('keydown', (e) => {
@@ -1098,6 +1122,77 @@ function initVisitorCounter() {
 }
 
 initVisitorCounter();
+
+// ===========================
+// Tag Basket (collect tags across videos)
+// ===========================
+const basketSection = document.getElementById('tag-basket-section');
+const basketContainer = document.getElementById('basket-container');
+const basketCount = document.getElementById('basket-count');
+const copyBasketBtn = document.getElementById('copy-basket-btn');
+const clearBasketBtn = document.getElementById('clear-basket-btn');
+
+function getBasket() {
+  try { return JSON.parse(localStorage.getItem('tagextract_basket') || '[]'); }
+  catch { return []; }
+}
+
+function saveBasket(basket) {
+  localStorage.setItem('tagextract_basket', JSON.stringify(basket));
+  renderBasket();
+}
+
+function addToBasket(tag) {
+  const basket = getBasket();
+  if (basket.includes(tag)) {
+    showToast(`"${tag}" already in basket`);
+    return;
+  }
+  basket.push(tag);
+  saveBasket(basket);
+  showToast(`Added "${tag}" to basket`);
+}
+
+function renderBasket() {
+  const basket = getBasket();
+  if (basket.length === 0) {
+    basketSection.hidden = true;
+    return;
+  }
+
+  basketSection.hidden = false;
+  basketCount.textContent = `(${basket.length})`;
+  basketContainer.innerHTML = '';
+
+  basket.forEach(tag => {
+    const chip = document.createElement('span');
+    chip.className = 'tag-chip';
+    chip.textContent = tag;
+    chip.title = 'Click to remove';
+    chip.style.cursor = 'pointer';
+    chip.addEventListener('click', () => {
+      const updated = getBasket().filter(t => t !== tag);
+      saveBasket(updated);
+      showToast(`Removed "${tag}" from basket`);
+    });
+    basketContainer.appendChild(chip);
+  });
+}
+
+copyBasketBtn.addEventListener('click', () => {
+  const basket = getBasket();
+  if (basket.length === 0) return;
+  copyToClipboard(basket.join(', '));
+  showToast(`Copied ${basket.length} basket tags`);
+});
+
+clearBasketBtn.addEventListener('click', () => {
+  localStorage.removeItem('tagextract_basket');
+  renderBasket();
+  showToast('Basket cleared');
+});
+
+renderBasket();
 
 // ===========================
 // Tag Analysis Charts

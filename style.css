@@ -1204,6 +1204,71 @@ body {
 .seo-check.fail { color: var(--primary); }
 
 /* ===========================
+   Tag Basket
+   =========================== */
+.tag-basket-section {
+  margin-top: 16px;
+  border-color: rgba(255, 171, 64, 0.3);
+}
+
+/* ===========================
+   Color-coded Tag Types
+   =========================== */
+.tag-chip.tag-short {
+  border-color: rgba(0, 212, 255, 0.35);
+}
+
+.tag-chip.tag-medium {
+  border-color: rgba(0, 230, 118, 0.35);
+  color: var(--success);
+  background: rgba(0, 230, 118, 0.08);
+}
+
+.tag-chip.tag-longtail {
+  border-color: rgba(255, 171, 64, 0.35);
+  color: var(--warning);
+  background: rgba(255, 171, 64, 0.08);
+}
+
+.tag-chip .tag-add-btn {
+  margin-left: 4px;
+  font-size: 0.7rem;
+  opacity: 0;
+  transition: opacity 0.2s;
+  cursor: pointer;
+}
+
+.tag-chip:hover .tag-add-btn {
+  opacity: 1;
+}
+
+/* Tag type legend */
+.tag-legend {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.tag-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.tag-legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.tag-legend-dot.short { background: var(--accent); }
+.tag-legend-dot.medium { background: var(--success); }
+.tag-legend-dot.longtail { background: var(--warning); }
+
+/* ===========================
    Tag Analysis Charts
    =========================== */
 .tag-chart-section {
@@ -1655,4 +1720,29 @@ body {
   .header { padding: 32px 0; }
   .logo { font-size: 2rem; }
   .main { padding: 32px 0; }
+}
+
+/* ===========================
+   Print Stylesheet
+   =========================== */
+@media print {
+  body { background: #fff; color: #000; }
+  .header, .footer, .ad-banner, .search-section, .mode-tabs,
+  .history-section, .how-it-works, .faq-section, .social-share,
+  .scroll-top, .toast, .confetti-canvas, .theme-toggle, .header-controls,
+  .btn-copy, .btn-extract, .btn-paste, .tags-actions, .view-toggle,
+  .tags-filter-wrap, .tag-click-hint, .tag-basket-section,
+  .seo-score-section, .tag-chart-section, .keywords-section,
+  #loading, #error-msg, #compare-input, #bulk-input { display: none !important; }
+
+  .results-dashboard { animation: none; }
+  .video-card { border: 1px solid #ccc; break-inside: avoid; }
+  .tags-section { border: 1px solid #ccc; }
+  .tag-chip {
+    background: #f0f0f0 !important;
+    color: #333 !important;
+    border: 1px solid #ccc !important;
+    animation: none !important;
+    print-color-adjust: exact;
+  }
 }

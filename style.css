@@ -996,6 +996,185 @@ body {
 }
 
 /* ===========================
+   Bulk Input
+   =========================== */
+.bulk-input-wrap {
+  margin-top: 8px;
+}
+
+.bulk-textarea {
+  width: 100%;
+  background: var(--bg-card);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  padding: 12px 14px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.bulk-textarea:focus {
+  border-color: var(--primary);
+}
+
+.bulk-textarea::placeholder {
+  color: var(--text-muted);
+}
+
+/* ===========================
+   Bulk Results
+   =========================== */
+.bulk-results-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.bulk-results-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.bulk-result-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+
+.bulk-result-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+
+.bulk-result-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* ===========================
+   View Toggle
+   =========================== */
+.view-toggle {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.view-btn {
+  background: var(--bg-input);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: 0.72rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.view-btn.active {
+  background: var(--accent);
+  color: #0f0f0f;
+  border-color: var(--accent);
+}
+
+/* Tag Cloud View */
+.tags-container.cloud-view {
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
+}
+
+.tags-container.cloud-view .tag-chip {
+  border: none;
+  background: transparent;
+  padding: 4px 8px;
+}
+
+.tags-container.cloud-view .tag-chip:hover {
+  background: var(--accent-glow);
+  box-shadow: none;
+}
+
+/* ===========================
+   SEO Score Widget
+   =========================== */
+.seo-score-section {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-top: 16px;
+}
+
+.seo-score-grid {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  margin-top: 16px;
+}
+
+.seo-metric {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.seo-ring {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 4px solid var(--border);
+  transition: border-color 0.5s;
+}
+
+.seo-ring.good { border-color: var(--success); }
+.seo-ring.ok { border-color: var(--warning); }
+.seo-ring.bad { border-color: var(--primary); }
+
+.seo-ring-value {
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+.seo-metric-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.seo-checklist {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.seo-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.seo-check.pass { color: var(--success); }
+.seo-check.warn { color: var(--warning); }
+.seo-check.fail { color: var(--primary); }
+
+/* ===========================
    Responsive Breakpoints
    =========================== */
 
@@ -1082,6 +1261,16 @@ body {
 
   .tag-stat-bar {
     width: 100%;
+  }
+
+  .seo-score-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .bulk-results-header {
+    flex-direction: column;
+    gap: 8px;
   }
 }
 

@@ -49,8 +49,22 @@ let currentTags = [];
 let currentKeywords = [];
 let currentSort = 'default';
 let currentMode = 'single';
+let currentView = 'chips';
 let currentVideoId = '';
+let currentVideoData = null;
+let bulkData = [];
 let toastTimer = null;
+
+const bulkInput = document.getElementById('bulk-input');
+const bulkUrls = document.getElementById('bulk-urls');
+const bulkResults = document.getElementById('bulk-results');
+const bulkResultsList = document.getElementById('bulk-results-list');
+const exportCsvBtn = document.getElementById('export-csv-btn');
+const seoScoreSection = document.getElementById('seo-score-section');
+const seoRing = document.getElementById('seo-ring');
+const seoRingValue = document.getElementById('seo-ring-value');
+const seoChecklist = document.getElementById('seo-checklist');
+const viewToggle = document.getElementById('view-toggle');
 
 // ===========================
 // Theme Toggle
@@ -88,8 +102,12 @@ document.querySelectorAll('.mode-tab').forEach(tab => {
     currentMode = tab.dataset.mode;
 
     compareInput.hidden = currentMode !== 'compare';
+    bulkInput.hidden = currentMode !== 'bulk';
+    // In bulk mode, hide single search box; show it otherwise
+    document.querySelector('.search-box').hidden = currentMode === 'bulk';
     results.hidden = true;
     compareResults.hidden = true;
+    bulkResults.hidden = true;
     hideError();
   });
 });
@@ -241,6 +259,20 @@ function renderResults(video) {
   renderTags(tags);
   results.hidden = false;
   compareResults.hidden = true;
+  bulkResults.hidden = true;
+
+  // Show view toggle & SEO score
+  if (tags.length > 0) {
+    viewToggle.hidden = false;
+    currentView = 'chips';
+    viewToggle.querySelectorAll('.view-btn').forEach(b => b.classList.toggle('active', b.dataset.view === 'chips'));
+    tagsContainer.classList.remove('cloud-view');
+  } else {
+    viewToggle.hidden = true;
+  }
+
+  currentVideoData = video;
+  renderSeoScore(video);
 
   // Description keywords
   const keywords = extractKeywords(snippet.description);
@@ -378,6 +410,7 @@ function updateTagCharBar(tags) {
 
 function renderTags(tags) {
   tagsContainer.innerHTML = '';
+  tagsContainer.classList.remove('cloud-view');
 
   if (tags.length === 0 && currentTags.length === 0) {
     tagsContainer.innerHTML = `<p style="color: var(--text-muted); font-size: 0.9rem;">${t('noTags')}</p>`;
@@ -690,6 +723,10 @@ async function handleExtract() {
     return handleCompare();
   }
 
+  if (currentMode === 'bulk') {
+    return handleBulk();
+  }
+
   const url = urlInput.value.trim();
   if (!url) {
     showError(t('errEmpty'));
@@ -733,6 +770,256 @@ urlInput.addEventListener('paste', () => {
       handleExtract();
     }
   }, 100);
+});
+
+// ===========================
+// View Toggle (Chips / Cloud)
+// ===========================
+viewToggle.addEventListener('click', (e) => {
+  const btn = e.target.closest('.view-btn');
+  if (!btn) return;
+
+  currentView = btn.dataset.view;
+  viewToggle.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  const query = tagFilter.value.toLowerCase().trim();
+  const sorted = getSortedTags();
+  const filtered = query ? sorted.filter(tag => tag.toLowerCase().includes(query)) : sorted;
+
+  if (currentView === 'cloud') {
+    renderTagCloud(filtered);
+  } else {
+    renderTags(filtered);
+  }
+});
+
+function renderTagCloud(tags) {
+  tagsContainer.innerHTML = '';
+  tagsContainer.classList.add('cloud-view');
+
+  if (tags.length === 0) {
+    tagsContainer.innerHTML = `<p style="color: var(--text-muted); font-size: 0.9rem;">${t('noTags')}</p>`;
+    return;
+  }
+
+  const maxLen = Math.max(...tags.map(t => t.length));
+  const minLen = Math.min(...tags.map(t => t.length));
+
+  tags.forEach((tag, i) => {
+    const chip = document.createElement('span');
+    chip.className = 'tag-chip';
+
+    const ratio = maxLen === minLen ? 0.5 : (tag.length - minLen) / (maxLen - minLen);
+    const fontSize = 0.7 + ratio * 1.2;
+    const opacity = 0.6 + ratio * 0.4;
+
+    chip.textContent = tag;
+    chip.style.fontSize = `${fontSize}rem`;
+    chip.style.opacity = opacity;
+    chip.style.animationDelay = `${Math.min(i * 20, 400)}ms`;
+    chip.title = 'Click to copy';
+    chip.addEventListener('click', () => copyTagChip(chip, tag));
+    tagsContainer.appendChild(chip);
+  });
+}
+
+// ===========================
+// SEO Score Calculator
+// ===========================
+function calculateSeoScore(video) {
+  const { snippet, statistics } = video;
+  const tags = snippet.tags || [];
+  const title = snippet.title || '';
+  const description = snippet.description || '';
+  const checks = [];
+  let score = 0;
+
+  // 1. Has tags
+  const hasTags = tags.length > 0;
+  checks.push({ label: `Has tags (${tags.length})`, pass: hasTags });
+  if (hasTags) score += 15;
+
+  // 2. Tag count 5+
+  const enoughTags = tags.length >= 5;
+  checks.push({ label: `5+ tags`, pass: enoughTags });
+  if (enoughTags) score += 10;
+
+  // 3. Tag count 15+
+  const manyTags = tags.length >= 15;
+  checks.push({ label: `15+ tags`, pass: manyTags });
+  if (manyTags) score += 10;
+
+  // 4. Tags within 500 char limit
+  const charCount = tags.join(',').length;
+  const withinLimit = charCount <= 500;
+  checks.push({ label: `Tags within 500 chars (${charCount})`, pass: withinLimit });
+  if (withinLimit) score += 10;
+
+  // 5. Tags use >60% of limit (good utilization)
+  const goodUtil = charCount >= 300 && charCount <= 500;
+  checks.push({ label: `Good tag utilization (300-500 chars)`, pass: goodUtil });
+  if (goodUtil) score += 10;
+
+  // 6. Title length 30-70 chars
+  const goodTitle = title.length >= 30 && title.length <= 70;
+  checks.push({ label: `Title length 30-70 chars (${title.length})`, pass: goodTitle });
+  if (goodTitle) score += 10;
+
+  // 7. Description length > 200 chars
+  const goodDesc = description.length >= 200;
+  checks.push({ label: `Description 200+ chars (${description.length})`, pass: goodDesc });
+  if (goodDesc) score += 10;
+
+  // 8. Tags appear in title
+  const titleLower = title.toLowerCase();
+  const titleMatch = tags.some(t => titleLower.includes(t.toLowerCase()));
+  checks.push({ label: `Tag matches in title`, pass: titleMatch });
+  if (titleMatch) score += 10;
+
+  // 9. Tags appear in description
+  const descLower = description.toLowerCase();
+  const descMatch = tags.some(t => descLower.includes(t.toLowerCase()));
+  checks.push({ label: `Tag matches in description`, pass: descMatch });
+  if (descMatch) score += 10;
+
+  // 10. Has a mix of short and long tags
+  const hasShort = tags.some(t => t.split(' ').length === 1);
+  const hasLong = tags.some(t => t.split(' ').length >= 3);
+  const mixedLen = hasShort && hasLong;
+  checks.push({ label: `Mix of short & long-tail tags`, pass: mixedLen });
+  if (mixedLen) score += 5;
+
+  return { score, checks };
+}
+
+function renderSeoScore(video) {
+  const { score, checks } = calculateSeoScore(video);
+
+  seoRingValue.textContent = score;
+  seoRing.className = 'seo-ring ' + (score >= 70 ? 'good' : score >= 40 ? 'ok' : 'bad');
+
+  seoChecklist.innerHTML = '';
+  checks.forEach(c => {
+    const el = document.createElement('div');
+    el.className = `seo-check ${c.pass ? 'pass' : 'fail'}`;
+    el.textContent = `${c.pass ? '✓' : '✗'} ${c.label}`;
+    seoChecklist.appendChild(el);
+  });
+
+  seoScoreSection.hidden = false;
+}
+
+// ===========================
+// Bulk Extract Mode
+// ===========================
+async function handleBulk() {
+  hideError();
+  results.hidden = true;
+  compareResults.hidden = true;
+  bulkResults.hidden = true;
+
+  const text = bulkUrls.value.trim();
+  if (!text) {
+    showError('Please enter at least one YouTube URL.');
+    return;
+  }
+
+  const urls = text.split('\n').map(u => u.trim()).filter(Boolean);
+  const ids = urls.map(u => ({ url: u, id: extractVideoId(u) })).filter(x => x.id);
+
+  if (ids.length === 0) {
+    showError(t('errInvalid'));
+    return;
+  }
+
+  setLoading(true);
+  bulkData = [];
+
+  try {
+    for (const { url, id } of ids) {
+      try {
+        const video = await fetchVideoData(id);
+        bulkData.push({
+          title: video.snippet.title,
+          tags: video.snippet.tags || [],
+          url: url,
+          videoId: id,
+        });
+      } catch {
+        bulkData.push({ title: `Error: ${url}`, tags: [], url, videoId: id });
+      }
+    }
+
+    renderBulkResults();
+  } catch (err) {
+    showError(err.message);
+  } finally {
+    setLoading(false);
+  }
+}
+
+function renderBulkResults() {
+  bulkResultsList.innerHTML = '';
+
+  bulkData.forEach(item => {
+    const card = document.createElement('div');
+    card.className = 'bulk-result-card';
+
+    const title = document.createElement('div');
+    title.className = 'bulk-result-title';
+    title.textContent = `${item.title} (${item.tags.length} tags)`;
+    card.appendChild(title);
+
+    const tagsWrap = document.createElement('div');
+    tagsWrap.className = 'bulk-result-tags';
+    item.tags.forEach(tag => {
+      const chip = document.createElement('span');
+      chip.className = 'tag-chip';
+      chip.textContent = tag;
+      chip.title = 'Click to copy';
+      chip.addEventListener('click', () => {
+        copyToClipboard(tag);
+        chip.classList.add('copied');
+        showToast(`Copied: "${tag}"`);
+        setTimeout(() => chip.classList.remove('copied'), 1500);
+      });
+      tagsWrap.appendChild(chip);
+    });
+    card.appendChild(tagsWrap);
+    bulkResultsList.appendChild(card);
+  });
+
+  bulkResults.hidden = false;
+  bulkResults.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ===========================
+// CSV Export
+// ===========================
+exportCsvBtn.addEventListener('click', () => {
+  if (bulkData.length === 0) return;
+
+  const rows = [['Video Title', 'Video URL', 'Tags']];
+  bulkData.forEach(item => {
+    rows.push([
+      `"${item.title.replace(/"/g, '""')}"`,
+      item.url,
+      `"${item.tags.join(', ').replace(/"/g, '""')}"`,
+    ]);
+  });
+
+  const csv = rows.map(r => r.join(',')).join('\n');
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'tagextract-bulk-results.csv';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast('Exported as CSV');
 });
 
 // ===========================

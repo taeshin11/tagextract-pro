@@ -97,6 +97,7 @@
       <div class="mode-tabs">
         <button class="mode-tab active" data-mode="single" data-i18n="modeSingle">Single Video</button>
         <button class="mode-tab" data-mode="compare" data-i18n="modeCompare">Compare Tags</button>
+        <button class="mode-tab" data-mode="bulk" data-i18n="modeBulk">Bulk Extract</button>
       </div>
 
       <!-- Search Section -->
@@ -132,6 +133,11 @@
             autocomplete="off"
             data-i18n-placeholder="inputPlaceholder2"
           >
+        </div>
+
+        <!-- Bulk Mode: Textarea for multiple URLs -->
+        <div id="bulk-input" class="bulk-input-wrap" hidden>
+          <textarea id="bulk-urls" class="bulk-textarea" rows="5" placeholder="Paste multiple YouTube URLs (one per line)..." data-i18n-placeholder="bulkPlaceholder"></textarea>
         </div>
 
         <p id="url-hint" class="hint-text" data-i18n="urlHint">Supports youtube.com, youtu.be, and YouTube Shorts URLs &nbsp;|&nbsp; <kbd>Ctrl+V</kbd> to paste, <kbd>Enter</kbd> to extract</p>
@@ -218,8 +224,27 @@
               <button class="sort-btn" data-sort="length" data-i18n="sortLength">Length</button>
             </div>
           </div>
+          <!-- View toggle -->
+          <div class="view-toggle" id="view-toggle" hidden>
+            <button class="view-btn active" data-view="chips" title="Chip view">▦ Chips</button>
+            <button class="view-btn" data-view="cloud" title="Tag cloud view">☁ Cloud</button>
+          </div>
           <div id="tags-container" class="tags-container" role="list" aria-live="polite" aria-label="Video tags"></div>
           <p class="tag-click-hint" id="tag-click-hint" hidden data-i18n="clickHint">Click any tag to copy it</p>
+        </div>
+
+        <!-- SEO Score Widget -->
+        <div id="seo-score-section" class="seo-score-section" hidden>
+          <h3 class="tags-title">📊 <span data-i18n="seoScore">Tag SEO Score</span></h3>
+          <div class="seo-score-grid">
+            <div class="seo-metric">
+              <div class="seo-ring" id="seo-ring">
+                <span class="seo-ring-value" id="seo-ring-value">0</span>
+              </div>
+              <span class="seo-metric-label" data-i18n="overallScore">Overall Score</span>
+            </div>
+            <div class="seo-checklist" id="seo-checklist"></div>
+          </div>
         </div>
 
         <!-- Description Keywords Section -->
@@ -253,6 +278,15 @@
             <div id="compare-only2" class="tags-container"></div>
           </div>
         </div>
+      </section>
+
+      <!-- Bulk Results -->
+      <section id="bulk-results" class="results-dashboard" hidden>
+        <div class="bulk-results-header">
+          <h3 class="section-title" data-i18n="bulkResults">Bulk Extraction Results</h3>
+          <button id="export-csv-btn" class="btn-copy" aria-label="Export as CSV">📥 CSV</button>
+        </div>
+        <div id="bulk-results-list" class="bulk-results-list"></div>
       </section>
 
       <!-- How It Works Section -->

@@ -265,6 +265,21 @@
           </div>
         </div>
 
+        <!-- Tag Length Distribution Chart -->
+        <div id="tag-chart-section" class="tags-section tag-chart-section" hidden>
+          <h3 class="tags-title">📊 <span data-i18n="tagAnalysis">Tag Analysis</span></h3>
+          <div class="chart-grid">
+            <div class="chart-block">
+              <h4 class="chart-label" data-i18n="tagLengthDist">Tag Length Distribution</h4>
+              <div id="tag-length-chart" class="bar-chart"></div>
+            </div>
+            <div class="chart-block">
+              <h4 class="chart-label" data-i18n="tagWordCount">Word Count per Tag</h4>
+              <div id="tag-word-chart" class="bar-chart"></div>
+            </div>
+          </div>
+        </div>
+
         <!-- Description Keywords Section -->
         <div id="keywords-section" class="tags-section keywords-section" hidden>
           <div class="tags-header">
@@ -389,6 +404,26 @@
     <a id="share-facebook" class="social-btn social-facebook" target="_blank" rel="noopener" aria-label="Share on Facebook">f</a>
     <a id="share-whatsapp" class="social-btn social-whatsapp" target="_blank" rel="noopener" aria-label="Share on WhatsApp">W</a>
   </div>
+
+  <!-- Keyboard Shortcuts Modal -->
+  <div id="shortcuts-modal" class="modal-overlay" hidden>
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Keyboard Shortcuts</h3>
+        <button id="close-shortcuts" class="modal-close" aria-label="Close">&times;</button>
+      </div>
+      <div class="shortcut-list">
+        <div class="shortcut-row"><kbd>Enter</kbd> <span>Extract tags</span></div>
+        <div class="shortcut-row"><kbd>Ctrl+V</kbd> <span>Paste URL (auto-extracts)</span></div>
+        <div class="shortcut-row"><kbd>?</kbd> <span>Show this help</span></div>
+        <div class="shortcut-row"><kbd>Esc</kbd> <span>Close modal / clear results</span></div>
+        <div class="shortcut-row"><kbd>T</kbd> <span>Toggle theme</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confetti canvas -->
+  <canvas id="confetti-canvas" class="confetti-canvas"></canvas>
 
   <!-- Scroll to top -->
   <button id="scroll-top" class="scroll-top" aria-label="Scroll to top" hidden>↑</button>

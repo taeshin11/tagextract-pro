@@ -273,6 +273,7 @@ function renderResults(video) {
 
   currentVideoData = video;
   renderSeoScore(video);
+  renderTagCharts(tags);
   updateSocialLinks();
 
   // Description keywords
@@ -451,6 +452,7 @@ function copyTagChip(chip, tag) {
   copyToClipboard(tag);
   chip.classList.add('copied');
   showToast(`${t('copied')} "${tag}"`);
+  triggerConfetti();
   setTimeout(() => chip.classList.remove('copied'), 1500);
 }
 
@@ -1074,6 +1076,56 @@ function initVisitorCounter() {
 initVisitorCounter();
 
 // ===========================
+// Tag Analysis Charts
+// ===========================
+function renderTagCharts(tags) {
+  const chartSection = document.getElementById('tag-chart-section');
+  if (tags.length === 0) { chartSection.hidden = true; return; }
+  chartSection.hidden = false;
+
+  // Tag length distribution (buckets)
+  const buckets = { '1-10': 0, '11-20': 0, '21-30': 0, '31-50': 0, '50+': 0 };
+  tags.forEach(t => {
+    const len = t.length;
+    if (len <= 10) buckets['1-10']++;
+    else if (len <= 20) buckets['11-20']++;
+    else if (len <= 30) buckets['21-30']++;
+    else if (len <= 50) buckets['31-50']++;
+    else buckets['50+']++;
+  });
+  renderBarChart('tag-length-chart', buckets, 'accent');
+
+  // Word count per tag
+  const wordBuckets = { '1 word': 0, '2 words': 0, '3 words': 0, '4+ words': 0 };
+  tags.forEach(t => {
+    const wc = t.trim().split(/\s+/).length;
+    if (wc === 1) wordBuckets['1 word']++;
+    else if (wc === 2) wordBuckets['2 words']++;
+    else if (wc === 3) wordBuckets['3 words']++;
+    else wordBuckets['4+ words']++;
+  });
+  renderBarChart('tag-word-chart', wordBuckets, 'primary');
+}
+
+function renderBarChart(containerId, data, colorClass) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = '';
+  const max = Math.max(...Object.values(data), 1);
+
+  Object.entries(data).forEach(([label, value]) => {
+    const pct = (value / max) * 100;
+    const row = document.createElement('div');
+    row.className = 'bar-row';
+    row.innerHTML = `
+      <span class="bar-label">${label}</span>
+      <div class="bar-track"><div class="bar-fill ${colorClass}" style="width:${pct}%"></div></div>
+      <span class="bar-value">${value}</span>
+    `;
+    container.appendChild(row);
+  });
+}
+
+// ===========================
 // Scroll to Top Button
 // ===========================
 const scrollTopBtn = document.getElementById('scroll-top');
@@ -1085,6 +1137,103 @@ window.addEventListener('scroll', () => {
 scrollTopBtn.addEventListener('click', () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
+
+// ===========================
+// Keyboard Shortcuts
+// ===========================
+const shortcutsModal = document.getElementById('shortcuts-modal');
+const closeShortcuts = document.getElementById('close-shortcuts');
+
+document.addEventListener('keydown', (e) => {
+  // Don't trigger when typing in inputs
+  const inInput = ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName);
+
+  if (e.key === '?' && !inInput) {
+    e.preventDefault();
+    shortcutsModal.hidden = !shortcutsModal.hidden;
+  }
+
+  if (e.key === 'Escape') {
+    if (!shortcutsModal.hidden) {
+      shortcutsModal.hidden = true;
+    } else if (!results.hidden) {
+      results.hidden = true;
+      seoScoreSection.hidden = true;
+      document.getElementById('tag-chart-section').hidden = true;
+      keywordsSection.hidden = true;
+      socialShare.hidden = true;
+    }
+  }
+
+  if (e.key === 't' && !inInput) {
+    themeToggle.click();
+  }
+});
+
+closeShortcuts.addEventListener('click', () => { shortcutsModal.hidden = true; });
+shortcutsModal.addEventListener('click', (e) => {
+  if (e.target === shortcutsModal) shortcutsModal.hidden = true;
+});
+
+// ===========================
+// Confetti Effect (first copy celebration)
+// ===========================
+let hasConfettied = false;
+
+function triggerConfetti() {
+  if (hasConfettied) return;
+  hasConfettied = true;
+
+  const canvas = document.getElementById('confetti-canvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const particles = [];
+  const colors = ['#ff0050', '#00d4ff', '#00e676', '#ffab40', '#e040fb'];
+
+  for (let i = 0; i < 80; i++) {
+    particles.push({
+      x: canvas.width / 2 + (Math.random() - 0.5) * 200,
+      y: canvas.height / 2,
+      vx: (Math.random() - 0.5) * 12,
+      vy: Math.random() * -14 - 4,
+      size: Math.random() * 6 + 3,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      gravity: 0.3,
+      life: 1,
+    });
+  }
+
+  let frame = 0;
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let alive = false;
+
+    particles.forEach(p => {
+      if (p.life <= 0) return;
+      alive = true;
+      p.x += p.vx;
+      p.vy += p.gravity;
+      p.y += p.vy;
+      p.life -= 0.015;
+
+      ctx.globalAlpha = Math.max(p.life, 0);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(p.x, p.y, p.size, p.size * 0.6);
+    });
+
+    ctx.globalAlpha = 1;
+    frame++;
+    if (alive && frame < 120) {
+      requestAnimationFrame(animate);
+    } else {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+  }
+
+  animate();
+}
 
 // ===========================
 // Social Share Links

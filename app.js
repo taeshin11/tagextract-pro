@@ -2,7 +2,7 @@
 // TagExtract Pro - Main App
 // ===========================
 
-const YOUTUBE_API_KEY = 'YOUR_YOUTUBE_API_KEY'; // Replace with your YouTube Data API v3 key
+const YOUTUBE_API_KEY = 'AIzaSyBymKS3QiRbD7y3R_BA41h9uhv-F2aEd1s';
 const WEBHOOK_URL = 'YOUR_GOOGLE_SHEETS_WEBHOOK_URL'; // Replace with your Google Apps Script Web App URL
 const MAX_HISTORY = 5;
 const YT_TAG_CHAR_LIMIT = 500;

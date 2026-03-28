@@ -1283,43 +1283,6 @@ scrollTopBtn.addEventListener('click', () => {
 });
 
 // ===========================
-// Keyboard Shortcuts
-// ===========================
-const shortcutsModal = document.getElementById('shortcuts-modal');
-const closeShortcuts = document.getElementById('close-shortcuts');
-
-document.addEventListener('keydown', (e) => {
-  // Don't trigger when typing in inputs
-  const inInput = ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName);
-
-  if (e.key === '?' && !inInput) {
-    e.preventDefault();
-    shortcutsModal.hidden = !shortcutsModal.hidden;
-  }
-
-  if (e.key === 'Escape') {
-    if (!shortcutsModal.hidden) {
-      shortcutsModal.hidden = true;
-    } else if (!results.hidden) {
-      results.hidden = true;
-      seoScoreSection.hidden = true;
-      document.getElementById('tag-chart-section').hidden = true;
-      keywordsSection.hidden = true;
-      socialShare.hidden = true;
-    }
-  }
-
-  if (e.key === 't' && !inInput) {
-    themeToggle.click();
-  }
-});
-
-closeShortcuts.addEventListener('click', () => { shortcutsModal.hidden = true; });
-shortcutsModal.addEventListener('click', (e) => {
-  if (e.target === shortcutsModal) shortcutsModal.hidden = true;
-});
-
-// ===========================
 // Confetti Effect (first copy celebration)
 // ===========================
 let hasConfettied = false;

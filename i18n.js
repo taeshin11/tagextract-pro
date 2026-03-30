@@ -629,6 +629,7 @@ function applyTranslations() {
   });
 
   document.documentElement.lang = currentLang;
+  document.body.classList.add('i18n-ready');
 }
 
 function setLanguage(lang) {
@@ -636,6 +637,14 @@ function setLanguage(lang) {
   currentLang = lang;
   localStorage.setItem('tagextract_lang', lang);
   applyTranslations();
+  // Update URL without reload so users can share language-specific links
+  const url = new URL(window.location);
+  if (lang === 'en') {
+    url.searchParams.delete('lang');
+  } else {
+    url.searchParams.set('lang', lang);
+  }
+  window.history.replaceState({}, '', url);
 }
 
 function initI18n() {

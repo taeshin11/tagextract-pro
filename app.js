@@ -1349,6 +1349,10 @@ const shareTwitter = document.getElementById('share-twitter');
 const shareFacebook = document.getElementById('share-facebook');
 const shareWhatsapp = document.getElementById('share-whatsapp');
 
+// Dynamic copyright year
+const copyrightYear = document.getElementById('copyright-year');
+if (copyrightYear) copyrightYear.textContent = new Date().getFullYear();
+
 function updateSocialLinks() {
   if (!currentVideoId) return;
   const shareUrl = encodeURIComponent(`${window.location.origin}${window.location.pathname}?v=${currentVideoId}`);

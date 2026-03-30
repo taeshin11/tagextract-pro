@@ -1684,6 +1684,47 @@ body {
 }
 
 /* ===========================
+   Feedback Button
+   =========================== */
+.feedback-btn {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-card);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 8px 14px;
+  font-size: 0.78rem;
+  text-decoration: none;
+  z-index: 100;
+  transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.feedback-btn:hover {
+  background: var(--accent);
+  color: #0f0f0f;
+  border-color: var(--accent);
+  transform: scale(1.05);
+  box-shadow: 0 4px 16px rgba(0, 212, 255, 0.3);
+  text-decoration: none;
+}
+
+.feedback-icon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.feedback-text {
+  font-weight: 600;
+}
+
+/* ===========================
    Responsive Breakpoints
    =========================== */
 
@@ -1807,6 +1848,16 @@ body {
     writing-mode: horizontal-tb;
     margin-bottom: 0;
   }
+
+  .feedback-btn {
+    bottom: 16px;
+    left: 16px;
+    padding: 8px 10px;
+  }
+
+  .feedback-text {
+    display: none;
+  }
 }
 
 /* Tablet */
@@ -1841,6 +1892,7 @@ body {
   .btn-copy, .btn-extract, .btn-paste, .tags-actions, .view-toggle,
   .tags-filter-wrap, .tag-click-hint, .tag-basket-section,
   .seo-score-section, .tag-chart-section, .keywords-section,
+  .feedback-btn,
   #loading, #error-msg, #compare-input, #bulk-input { display: none !important; }
 
   .results-dashboard { animation: none; }

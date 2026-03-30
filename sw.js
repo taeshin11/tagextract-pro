@@ -1,4 +1,4 @@
-const CACHE_NAME = 'tagextract-v11';
+const CACHE_NAME = 'tagextract-v12';
 const STATIC_ASSETS = [
   '/',
   '/index.html',

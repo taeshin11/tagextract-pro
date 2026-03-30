@@ -49,12 +49,120 @@
   }
   </script>
 
+  <!-- FAQ Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What are YouTube video tags?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "YouTube tags are keywords that creators add to their videos to help YouTube understand the content and context. Tags influence search rankings and video recommendations."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is this tool free to use?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes! TagExtract Pro is completely free. We use the official YouTube Data API to fetch video information, and there are no hidden fees or subscriptions."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I see tags from any YouTube video?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "You can extract tags from any public YouTube video. Some videos may not have tags set by the creator, in which case the tool will let you know."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How can I use extracted tags for my own videos?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Study the tags used by top-performing videos in your niche. Use the Copy All button to quickly grab tags, then adapt them for your own content. The character counter helps you stay within YouTube's 500-character tag limit."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the Compare Tags feature?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Compare Tags lets you analyze two YouTube videos side-by-side, showing common tags and unique tags for each video. Great for competitive analysis and finding tag gaps."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- HowTo Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to Extract YouTube Video Tags",
+    "description": "Learn how to extract hidden tags from any YouTube video using TagExtract Pro in 3 simple steps.",
+    "step": [
+      {
+        "@type": "HowToStep",
+        "name": "Paste URL",
+        "text": "Copy a YouTube video URL and paste it into the search bar.",
+        "position": 1
+      },
+      {
+        "@type": "HowToStep",
+        "name": "Extract Tags",
+        "text": "Click Extract Tags and the tool will fetch all hidden tags using the YouTube API.",
+        "position": 2
+      },
+      {
+        "@type": "HowToStep",
+        "name": "Copy and Use",
+        "text": "Copy individual tags, all tags at once, or export them for your own videos.",
+        "position": 3
+      }
+    ]
+  }
+  </script>
+
+  <!-- BreadcrumbList Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://tagextract-pro.vercel.app/"
+      }
+    ]
+  }
+  </script>
+
   <!-- Favicon & PWA -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏷️</text></svg>">
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#ff0050">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <!-- Hreflang for international SEO -->
+  <link rel="alternate" hreflang="en" href="https://tagextract-pro.vercel.app/">
+  <link rel="alternate" hreflang="ko" href="https://tagextract-pro.vercel.app/?lang=ko">
+  <link rel="alternate" hreflang="ja" href="https://tagextract-pro.vercel.app/?lang=ja">
+  <link rel="alternate" hreflang="es" href="https://tagextract-pro.vercel.app/?lang=es">
+  <link rel="alternate" hreflang="zh" href="https://tagextract-pro.vercel.app/?lang=zh">
+  <link rel="alternate" hreflang="pt" href="https://tagextract-pro.vercel.app/?lang=pt">
+  <link rel="alternate" hreflang="fr" href="https://tagextract-pro.vercel.app/?lang=fr">
+  <link rel="alternate" hreflang="de" href="https://tagextract-pro.vercel.app/?lang=de">
+  <link rel="alternate" hreflang="hi" href="https://tagextract-pro.vercel.app/?lang=hi">
+  <link rel="alternate" hreflang="x-default" href="https://tagextract-pro.vercel.app/">
 
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7098271335538021" crossorigin="anonymous"></script>
@@ -87,6 +195,11 @@
           <option value="ko">KO</option>
           <option value="ja">JA</option>
           <option value="es">ES</option>
+          <option value="zh">ZH</option>
+          <option value="pt">PT</option>
+          <option value="fr">FR</option>
+          <option value="de">DE</option>
+          <option value="hi">HI</option>
         </select>
         <button id="theme-toggle" class="theme-toggle" aria-label="Toggle light/dark theme" title="Toggle theme">
           🌙
@@ -419,12 +532,18 @@
     </div>
   </div>
 
+  <!-- Feedback Floating Button -->
+  <a href="mailto:taeshinkim11@gmail.com?subject=TagExtract%20Pro%20Feedback&body=Hi%20TagExtract%20Pro%20team%2C%0A%0AI%20have%20a%20suggestion%2Fbug%20report%3A%0A%0A" class="feedback-btn" id="feedback-btn" aria-label="Send feedback" title="Send feedback or suggestions">
+    <span class="feedback-icon">💬</span>
+    <span class="feedback-text" data-i18n="feedbackBtn">Feedback</span>
+  </a>
+
   <!-- Footer -->
   <footer class="footer">
     <div class="container">
       <div class="footer-content">
         <div class="footer-info">
-          <p>&copy; 2026 TagExtract Pro. Free YouTube SEO Tool.</p>
+          <p>&copy; <span id="copyright-year"></span> TagExtract Pro. Free YouTube SEO Tool.</p>
           <p class="footer-disclaimer" data-i18n="disclaimer">This tool uses the official YouTube Data API. Not affiliated with YouTube or Google.</p>
         </div>
         <nav class="footer-links" aria-label="Footer navigation">
@@ -432,6 +551,7 @@
           <a href="/how-to-use.html">How to Use</a>
           <a href="/privacy.html">Privacy Policy</a>
           <a href="/terms.html">Terms of Service</a>
+          <a href="mailto:taeshinkim11@gmail.com?subject=TagExtract%20Pro%20Feedback" data-i18n="feedbackLink">Feedback</a>
         </nav>
         <div class="visitor-counter">
           <span class="counter-item">👁️ Today: <span id="today-visitors">-</span></span>

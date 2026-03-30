@@ -1,32 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://tagextract-pro.vercel.app/</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-03-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tagextract-pro.vercel.app/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://tagextract-pro.vercel.app/?lang=ko"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://tagextract-pro.vercel.app/?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tagextract-pro.vercel.app/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://tagextract-pro.vercel.app/?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://tagextract-pro.vercel.app/?lang=pt"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://tagextract-pro.vercel.app/?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://tagextract-pro.vercel.app/?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://tagextract-pro.vercel.app/?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tagextract-pro.vercel.app/"/>
   </url>
   <url>
     <loc>https://tagextract-pro.vercel.app/about.html</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-03-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tagextract-pro.vercel.app/how-to-use.html</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-03-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tagextract-pro.vercel.app/privacy.html</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-03-30</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://tagextract-pro.vercel.app/terms.html</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-03-30</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>

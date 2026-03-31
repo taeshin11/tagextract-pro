@@ -629,7 +629,6 @@ function applyTranslations() {
   });
 
   document.documentElement.lang = currentLang;
-  document.body.classList.add('i18n-ready');
 }
 
 function setLanguage(lang) {
@@ -647,6 +646,16 @@ function setLanguage(lang) {
   window.history.replaceState({}, '', url);
 }
 
+function detectBrowserLang() {
+  // Check navigator.languages array first (preferred languages list), then navigator.language
+  const langs = navigator.languages || [navigator.language || ''];
+  for (const lang of langs) {
+    const code = lang.split('-')[0].toLowerCase();
+    if (TRANSLATIONS[code]) return code;
+  }
+  return 'en';
+}
+
 function initI18n() {
   // Priority: URL param > localStorage > browser language > default (en)
   const urlParams = new URLSearchParams(window.location.search);
@@ -659,11 +668,8 @@ function initI18n() {
     if (saved && TRANSLATIONS[saved]) {
       currentLang = saved;
     } else {
-      // Auto-detect browser language
-      const browserLang = (navigator.language || '').split('-')[0].toLowerCase();
-      if (TRANSLATIONS[browserLang]) {
-        currentLang = browserLang;
-      }
+      // Auto-detect from browser preferred languages
+      currentLang = detectBrowserLang();
     }
   }
   const langSelect = document.getElementById('lang-select');

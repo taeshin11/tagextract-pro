@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gcloud --version)",
+      "Bash(winget install:*)",
+      "Bash(export PATH=\"$PATH:/c/Users/gangd/AppData/Local/Google/Cloud SDK/google-cloud-sdk/bin\")",
+      "Bash(gcloud auth:*)",
+      "Bash(npx vercel:*)",
+      "Bash(npm install:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(\"C:/Users/gangd/AppData/Local/Google/Cloud SDK/google-cloud-sdk/bin/gcloud.cmd\" --version)",
+      "Bash(\"C:/Users/gangd/AppData/Local/Google/Cloud SDK/google-cloud-sdk/bin/gcloud.cmd\" auth list)",
+      "Bash(GCLOUD=\"C:/Users/gangd/AppData/Local/Google/Cloud SDK/google-cloud-sdk/bin/gcloud.cmd\")",
+      "Bash(\"$GCLOUD\" config:*)",
+      "Bash(\"$GCLOUD\" projects:*)",
+      "Bash(\"$GCLOUD\" services:*)",
+      "Bash(\"$GCLOUD\" auth:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "WebFetch(domain:tagextract-pro.vercel.app)",
+      "Bash(node -e \":*)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"https://tagextract-pro.vercel.app/?lang=ko\")",
+      "Bash(curl -s \"https://tagextract-pro.vercel.app/i18n.js\")"
+    ]
+  }
+}
